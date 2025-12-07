@@ -1,5 +1,15 @@
 import request from "supertest";
 import app from "../index";
+import {
+  badArtistObj,
+  badTitleObj,
+  badLocationObj,
+  badYearObj,
+  badDiameterObj,
+  badSleeveCondObj,
+  badRecordCondObj,
+  badLabelCondObj,
+} from "../test_resources/recordsTestResources";
 
 describe("records routes", () => {
   describe("check error handling for db calls", () => {
