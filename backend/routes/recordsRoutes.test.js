@@ -19,7 +19,10 @@ describe("records routes", () => {
   });
   describe("POST /records", () => {
     describe("invalid form data", () => {
-      it.todo("returns 400 if given invalid artist info");
+      it("returns 400 if given invalid artist info", async () => {
+        const res = await request(app).post("/records").send(badArtistObj);
+        expect(res.status).toBe(400);
+      });
       it.todo("returns 400 if given invalid title info");
       it.todo("returns 400 if given invalid location info");
       it.todo("returns 400 if given invalid year info");

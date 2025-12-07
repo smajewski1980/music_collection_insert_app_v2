@@ -1,5 +1,10 @@
 import express from "express";
+import recordRoutes from "./routes/recordRoutes";
+import bodyParser from "body-parser";
 const app = express();
+
+app.use(bodyParser.json());
+app.use("/records", recordRoutes);
 
 app.get("/errortest", (req, res, next) => {
   return next(new Error());
