@@ -1,6 +1,8 @@
 import request from "supertest";
 import app from "../index";
 import pool from "../database/db_connect";
+import { jest } from "@jest/globals";
+
 import {
   noArtistObj,
   numArtistObj,
@@ -27,9 +29,23 @@ import {
 
 describe("records routes", () => {
   describe("check error handling for db calls", () => {
-    it.todo(
-      "POST /records returns 500 if there is a problem connecting to the db",
-    );
+    let poolSpy;
+
+    beforeEach(() => {
+      poolSpy = jest.spyOn(pool, "query");
+    });
+
+    afterEach(() => {
+      poolSpy.mockRestore();
+    });
+
+    it("POST /records returns 500 if there is a problem connecting to the db", async () => {
+      poolSpy.mockImplementation(() => {
+        throw new Error("PostgreSQL database error: Connection refused");
+      });
+
+      await request(app).post("/records").send(goodRecordObj).expect(500);
+    });
   });
   describe("POST /records", () => {
     describe("invalid form data", () => {
