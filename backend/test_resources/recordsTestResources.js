@@ -198,3 +198,13 @@ export const numLabelObj = {
   record_condition: "***",
   label: 47,
 };
+export const goodRecordObj = {
+  artist: "test artist",
+  title: "test title",
+  location: "33s Test Location",
+  year: 1980,
+  diameter: "12 inch",
+  sleeve_condition: "***",
+  record_condition: "***",
+  label: "Some Record Label",
+};

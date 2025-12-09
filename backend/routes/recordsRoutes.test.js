@@ -21,6 +21,7 @@ import {
   nonStarsRecordCondObj,
   noLabelObj,
   numLabelObj,
+  goodRecordObj,
 } from "../test_resources/recordsTestResources";
 
 describe("records routes", () => {
@@ -117,7 +118,11 @@ describe("records routes", () => {
       });
     });
 
-    it.todo("returns 201 and the posted records id");
+    it("returns 201 and the posted records id", async () => {
+      const res = await request(app).post("/records").send(goodRecordObj);
+      expect(res.status).toBe(201);
+      expect(Number.isInteger(res.body)).toBe(true);
+    });
   });
 
   describe("GET /records/:id", () => {
