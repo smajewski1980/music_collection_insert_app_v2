@@ -1,5 +1,6 @@
 import request from "supertest";
 import app from "../index";
+import pool from "../database/db_connect";
 import {
   noArtistObj,
   numArtistObj,
@@ -122,10 +123,16 @@ describe("records routes", () => {
       const res = await request(app).post("/records").send(goodRecordObj);
       expect(res.status).toBe(201);
       expect(Number.isInteger(res.body)).toBe(true);
+      // cleanup - delete the newly created record
+      const newId = res.body;
+      const cleanupRes = await pool.query("DELETE FROM records where id = $1", [
+        newId,
+      ]);
+      expect(cleanupRes.rowCount).toBe(1);
     });
-  });
 
-  describe("GET /records/:id", () => {
-    it.todo("returns a records data given a records id");
+    afterAll(() => {
+      pool.end();
+    });
   });
 });

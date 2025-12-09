@@ -34,8 +34,6 @@ export default async function postRecordsController(req, res, next) {
     } catch (error) {
       const err = new Error(error);
       return next(err);
-    } finally {
-      await pool.end();
     }
   }
 
