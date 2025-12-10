@@ -1,5 +1,5 @@
 import { validationResult } from "express-validator";
-import pool from "../database/db_connect";
+import pool from "../database/db_connect.js";
 
 export default async function postRecordsController(req, res, next) {
   const valRes = validationResult(req);

@@ -1,5 +1,5 @@
 import express from "express";
-import recordRoutes from "./routes/recordRoutes";
+import recordRoutes from "./routes/recordRoutes.js";
 import bodyParser from "body-parser";
 const app = express();
 

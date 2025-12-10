@@ -3,29 +3,16 @@ import app from "../index";
 import pool from "../database/db_connect";
 import { jest } from "@jest/globals";
 
-import {
-  noArtistObj,
-  numArtistObj,
-  noTitleObj,
-  numTitleObj,
-  noLocationObj,
-  numLocationObj,
-  noYearObj,
-  longYearObj,
-  shortYearObj,
-  strYearObj,
-  noDiameterObj,
-  numDiameterObj,
-  noSleeveCondObj,
-  longSleeveCondObj,
-  nonStarSleeveCondObj,
-  noRecordCondObj,
-  longRecordCondObj,
-  nonStarsRecordCondObj,
-  noLabelObj,
-  numLabelObj,
-  goodRecordObj,
-} from "../test_resources/recordsTestResources";
+const goodRecordObj = {
+  artist: "test artist",
+  title: "test title",
+  location: "33s Test Location",
+  year: 1980,
+  diameter: "12 inch",
+  sleeve_condition: "***",
+  record_condition: "***",
+  label: "Some Record Label",
+};
 
 describe("records routes", () => {
   describe("check error handling for db calls", () => {
@@ -50,87 +37,103 @@ describe("records routes", () => {
   describe("POST /records", () => {
     describe("invalid form data", () => {
       it("returns 400 if given no artist info", async () => {
-        const res = await request(app).post("/records").send(noArtistObj);
+        const testData = { ...goodRecordObj, artist: "" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if artist is a number not a string", async () => {
-        const res = await request(app).post("/records").send(numArtistObj);
+        const testData = { ...goodRecordObj, artist: 47 };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if given no title info", async () => {
-        const res = await request(app).post("/records").send(noTitleObj);
+        const testData = { ...goodRecordObj, title: "" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if title is a number not a string", async () => {
-        const res = await request(app).post("/records").send(numTitleObj);
+        const testData = { ...goodRecordObj, title: 47 };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if given no location info", async () => {
-        const res = await request(app).post("/records").send(noLocationObj);
+        const testData = { ...goodRecordObj, location: "" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if location is a number not a string", async () => {
-        const res = await request(app).post("/records").send(numLocationObj);
+        const testData = { ...goodRecordObj, location: 47 };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if given no year info", async () => {
-        const res = await request(app).post("/records").send(noYearObj);
+        const testData = { ...goodRecordObj, year: "" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if given a year too short", async () => {
-        const res = await request(app).post("/records").send(shortYearObj);
+        const testData = { ...goodRecordObj, year: 194 };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if given a year too long", async () => {
-        const res = await request(app).post("/records").send(longYearObj);
+        const testData = { ...goodRecordObj, year: 19477 };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if given a string year not a number", async () => {
-        const res = await request(app).post("/records").send(strYearObj);
+        const testData = { ...goodRecordObj, year: "1947" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if given no diameter info", async () => {
-        const res = await request(app).post("/records").send(noDiameterObj);
+        const testData = { ...goodRecordObj, diameter: "" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if diameter is number not string", async () => {
-        const res = await request(app).post("/records").send(numDiameterObj);
+        const testData = { ...goodRecordObj, diameter: 47 };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if given no sleeve condition info", async () => {
-        const res = await request(app).post("/records").send(noSleeveCondObj);
+        const testData = { ...goodRecordObj, sleeve_condition: "" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if sleeve condition is longer than 5 *'s", async () => {
-        const res = await request(app).post("/records").send(longSleeveCondObj);
+        const testData = { ...goodRecordObj, sleeve_condition: "******" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if sleeve condition contains characters other than *'s", async () => {
-        const res = await request(app)
-          .post("/records")
-          .send(nonStarSleeveCondObj);
+        const testData = { ...goodRecordObj, sleeve_condition: "xxx" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if given no record condition info", async () => {
-        const res = await request(app).post("/records").send(noRecordCondObj);
+        const testData = { ...goodRecordObj, record_condition: "" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if record condition is longer than 5 *'s", async () => {
-        const res = await request(app).post("/records").send(longRecordCondObj);
+        const testData = { ...goodRecordObj, record_condition: "******" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if record condition contains characters other than *'s", async () => {
-        const res = await request(app)
-          .post("/records")
-          .send(nonStarsRecordCondObj);
+        const testData = { ...goodRecordObj, record_condition: "xxx" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if given no label info", async () => {
-        const res = await request(app).post("/records").send(noLabelObj);
+        const testData = { ...goodRecordObj, label: "" };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
       it("returns 400 if label is a number not a string", async () => {
-        const res = await request(app).post("/records").send(numLabelObj);
+        const testData = { ...goodRecordObj, label: 47 };
+        const res = await request(app).post("/records").send(testData);
         expect(res.status).toBe(400);
       });
     });

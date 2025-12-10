@@ -1,7 +1,14 @@
 import express from "express";
 const router = express.Router();
 import { body } from "express-validator";
-import postRecordsController from "../controllers/postRecordsController";
+import postRecordsController from "../controllers/postRecordsController.js";
+
+function isActualNumber(value) {
+  if (typeof value !== "number") {
+    throw new Error("Input must be of type number");
+  }
+  return true;
+}
 
 router.post(
   "/",
@@ -26,7 +33,7 @@ router.post(
   body("year")
     .exists()
     .withMessage("Year can not be null")
-    .isNumeric()
+    .custom(isActualNumber)
     .withMessage("Year must be a number")
     .isLength({ min: 4, max: 4 })
     .escape(),
