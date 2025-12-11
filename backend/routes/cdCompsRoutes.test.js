@@ -28,15 +28,59 @@ describe("cd comps routes", () => {
 
   describe("POST /cd-comps", () => {
     describe("invalid form data", () => {
-      it.todo("returns 400 if given no title info");
-      it.todo("returns 400 if artist is a number not a string");
-      it.todo("returns 400 if given no year info");
-      it.todo("returns 400 if given a year too short");
-      it.todo("returns 400 if given a year too long");
-      it.todo("returns 400 if given a year string not a number");
-      it.todo("returns 400 if given no location info");
-      it.todo("returns 400 if tracks array is empty");
-      it.todo("returns 400 if given no track artist");
+      it("returns 400 if given no title info", async () => {
+        await request(app)
+          .post("/cd-comps")
+          .send({ ...goodCdCompData, title: "" })
+          .expect(400);
+      });
+      it("returns 400 if title is a number not a string", async () => {
+        await request(app)
+          .post("/cd-comps")
+          .send({ ...goodCdCompData, title: 47 })
+          .expect(400);
+      });
+      it("returns 400 if given no year info", async () => {
+        await request(app)
+          .post("/cd-comps")
+          .send({ ...goodCdCompData, year: "" })
+          .expect(400);
+      });
+      it("returns 400 if given a year too short", async () => {
+        await request(app)
+          .post("/cd-comps")
+          .send({ ...goodCdCompData, year: 194 })
+          .expect(400);
+      });
+      it("returns 400 if given a year too long", async () => {
+        await request(app)
+          .post("/cd-comps")
+          .send({ ...goodCdCompData, year: 19477 })
+          .expect(400);
+      });
+      it("returns 400 if given a year string not a number", async () => {
+        await request(app)
+          .post("/cd-comps")
+          .send({ ...goodCdCompData, year: "1947" })
+          .expect(400);
+      });
+      it("returns 400 if given no location info", async () => {
+        await request(app)
+          .post("/cd-comps")
+          .send({ ...goodCdCompData, location: "" })
+          .expect(400);
+      });
+      it("returns 400 if tracks array is empty", async () => {
+        await request(app)
+          .post("/cd-comps")
+          .send({ ...goodCdCompData, tracks: [] })
+          .expect(400);
+      });
+      it("returns 400 if given no track artist", async () => {
+        const testData = { ...goodCdCompData };
+        testData.tracks[0].artist = "";
+        await request(app).post("/cd-comps").send(testData).expect(400);
+      });
       it.todo("returns 400 if given a number not string for track artist");
       it.todo("returns 400 if given no track title");
       it.todo("returns 400 if given a number not string for track title");
