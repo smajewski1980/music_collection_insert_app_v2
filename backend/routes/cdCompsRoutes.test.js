@@ -8,14 +8,8 @@ const goodCdCompData = {
   year: 1980,
   location: "Various Artists 9",
   tracks: [
-    {
-      artist: "one hell of an artist",
-      track_name: "one hell of a track title",
-    },
-    {
-      artist: "another great artist",
-      track_name: "another great track title",
-    },
+    ["one hell of an artist", "one hell of a track title"],
+    ["another great artist", "another great track title"],
   ],
 };
 
@@ -71,18 +65,22 @@ describe("cd comps routes", () => {
           .expect(400);
       });
       it("returns 400 if tracks array is empty", async () => {
-        await request(app)
+        const res = await request(app)
           .post("/cd-comps")
           .send({ ...goodCdCompData, tracks: [] })
           .expect(400);
       });
       it("returns 400 if given no track artist", async () => {
         const testData = { ...goodCdCompData };
-        testData.tracks[0].artist = "";
+        testData.tracks[0][0] = "";
         await request(app).post("/cd-comps").send(testData).expect(400);
       });
-      it.todo("returns 400 if given a number not string for track artist");
-      it.todo("returns 400 if given no track title");
+      it("returns 400 if given no track title", async () => {
+        const testData = { ...goodCdCompData };
+        testData.tracks[0][0] = "one hell of an artist";
+        testData.tracks[0][1] = "";
+        await request(app).post("/cd-comps").send(testData).expect(400);
+      });
       it.todo("returns 400 if given a number not string for track title");
       it.todo("returns 400 if given no title id");
       it.todo("returns 400 if given a string not number for title id");

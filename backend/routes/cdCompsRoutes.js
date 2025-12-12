@@ -10,6 +10,17 @@ function isActualNumber(value) {
   return true;
 }
 
+function checkArtist(value) {
+  console.log(value);
+  if (typeof value.artist === "number") {
+    throw new Error("All track data must be of type string.");
+  }
+  if (!value || !value.artist) {
+    throw new Error("All tracks must have an artist");
+  }
+  return true;
+}
+
 router.post(
   "/",
   body("title")
@@ -32,11 +43,19 @@ router.post(
     .isString()
     .escape(),
   body("tracks").exists().isArray({ min: 1 }).escape(),
-  body("tracks"[0].artist)
-    .exists()
-    .isString()
-    .notEmpty()
-    .withMessage("Track Artist can not be empty")
+  body("tracks.*")
+    .custom((val, { req }) => {
+      const artist = val.split(",")[0];
+      const track = val.split(",")[1];
+      if (artist === "") {
+        throw new Error("Artist must not be empty.");
+      }
+      if (track === "") {
+        throw new Error("Track must not be empty.");
+      }
+
+      return true;
+    })
     .escape(),
   postCdCompsController,
 );
