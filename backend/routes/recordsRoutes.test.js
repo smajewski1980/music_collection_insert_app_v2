@@ -1,6 +1,6 @@
 import request from "supertest";
 import app from "..";
-import pool from "../database/db_connect";
+import pool from "../database/db_connect.js";
 import { jest } from "@jest/globals";
 
 const goodRecordObj = {

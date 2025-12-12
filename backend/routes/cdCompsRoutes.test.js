@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "..";
 import pool from "../database/db_connect.js";
-import { describe, jest } from "@jest/globals";
+import { jest } from "@jest/globals";
 
 const goodCdCompData = {
   title: "endpoint test title 1",
@@ -15,9 +15,23 @@ const goodCdCompData = {
 
 describe("cd comps routes", () => {
   describe("check error handling for db calls", () => {
-    it.todo(
-      "POST /cd-comps returns 500 if there is a problem connecting to the database",
-    );
+    let poolSpy;
+
+    beforeEach(() => {
+      poolSpy = jest.spyOn(pool, "query");
+    });
+
+    afterEach(() => {
+      poolSpy.mockRestore();
+    });
+
+    it("POST /cd-comps returns 500 if there is a problem connecting to the database", async () => {
+      poolSpy.mockImplementation(() => {
+        throw new Error("PostgreSQL database error: Connection refused");
+      });
+
+      await request(app).post("/cd-comps").send(goodCdCompData).expect(500);
+    });
   });
 
   describe("POST /cd-comps", () => {
@@ -81,9 +95,6 @@ describe("cd comps routes", () => {
         testData.tracks[0][1] = "";
         await request(app).post("/cd-comps").send(testData).expect(400);
       });
-      it.todo("returns 400 if given a number not string for track title");
-      it.todo("returns 400 if given no title id");
-      it.todo("returns 400 if given a string not number for title id");
     });
 
     it.todo("returns 201 and the cd comp title id when given good comp data");
