@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "..";
 import pool from "../database/db_connect.js";
-import { jest } from "@jest/globals";
+import { afterAll, jest } from "@jest/globals";
 
 const goodCdCompData = {
   title: "endpoint test title 1",
@@ -35,6 +35,10 @@ describe("cd comps routes", () => {
   });
 
   describe("POST /cd-comps", () => {
+    afterAll(() => {
+      pool.end();
+    });
+
     describe("invalid form data", () => {
       it("returns 400 if given no title info", async () => {
         await request(app)
@@ -97,7 +101,11 @@ describe("cd comps routes", () => {
       });
     });
 
-    it.todo("returns 201 and the cd comp title id when given good comp data");
-    it.todo("returns 201 when given good track data");
+    it("returns 201 and the cd comp title id when given good comp and track data", async () => {
+      goodCdCompData.tracks[0][1] = "one hell of a track title";
+      const res = await request(app).post("/cd-comps").send(goodCdCompData);
+      expect(res.status).toBe(201);
+      expect(Number.isInteger(res.body)).toBe(true);
+    });
   });
 });
