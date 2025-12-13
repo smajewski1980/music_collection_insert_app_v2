@@ -25,8 +25,18 @@ describe("cd singles routes", () => {
 
   describe("POST /cd-singles", () => {
     describe("invalid form data", () => {
-      it.todo("returns 400 if given no artist info");
-      it.todo("returns 400 if artist is a number not a string");
+      it("returns 400 if given no artist info", async () => {
+        await request(app)
+          .post("/cd-singles")
+          .send({ ...goodCdSingleData, artist: "" })
+          .expect(400);
+      });
+      it("returns 400 if artist is a number not a string", async () => {
+        await request(app)
+          .post("/cd-singles")
+          .send({ ...goodCdSingleData, artist: 47 })
+          .expect(400);
+      });
       it.todo("returns 400 if given no title info");
       it.todo("returns 400 if title is a number not a string");
       it.todo("returns 400 if given no year info");

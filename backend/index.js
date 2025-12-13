@@ -1,12 +1,14 @@
 import express from "express";
 import recordRoutes from "./routes/recordRoutes.js";
 import cdCompsRoutes from "./routes/cdCompsRoutes.js";
+import cdSinglesRoutes from "./routes/cdSinglesRoutes.js";
 import bodyParser from "body-parser";
 const app = express();
 
 app.use(bodyParser.json());
 app.use("/records", recordRoutes);
 app.use("/cd-comps", cdCompsRoutes);
+app.use("/cd-singles", cdSinglesRoutes);
 
 app.get("/errortest", (req, res, next) => {
   return next(new Error());
