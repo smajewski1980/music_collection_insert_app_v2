@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../index.js";
 import pool from "../database/db_connect.js";
-import { afterAll, jest } from "@jest/globals";
+import { jest } from "@jest/globals";
 
 const goodCdCompData = {
   title: "endpoint test title 1",
@@ -35,10 +35,6 @@ describe("cd comps routes", () => {
   });
 
   describe("POST /cd-comps", () => {
-    afterAll(() => {
-      pool.end();
-    });
-
     describe("invalid form data", () => {
       it("returns 400 if given no title info", async () => {
         await request(app)
@@ -114,6 +110,7 @@ describe("cd comps routes", () => {
         [titleId],
       );
       expect(cleanupRes.rowCount).toBe(1);
+      pool.end();
     });
   });
 });

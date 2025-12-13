@@ -13,7 +13,6 @@ app.get("/errortest", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  // console.log(err.message);
   res
     .status(err.status || 500)
     .json("Something went wrong on our end, please try again.");
