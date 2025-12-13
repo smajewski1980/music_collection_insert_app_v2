@@ -104,9 +104,16 @@ describe("cd comps routes", () => {
     it("returns 201 and the cd comp title id when given good comp and track data", async () => {
       goodCdCompData.tracks[0][1] = "one hell of a track title";
       const res = await request(app).post("/cd-comps").send(goodCdCompData);
+      const titleId = res.body.titleId;
       expect(res.status).toBe(201);
-      expect(Number.isInteger(res.body.titleId)).toBe(true);
-      // still have to do cleanup
+      expect(Number.isInteger(titleId)).toBe(true);
+
+      // cleanup
+      const cleanupRes = await pool.query(
+        "DELETE FROM cd_compilations WHERE title_id = $1",
+        [titleId],
+      );
+      expect(cleanupRes.rowCount).toBe(1);
     });
   });
 });
