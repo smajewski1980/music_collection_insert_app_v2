@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "..";
+import app from "../index.js";
 import pool from "../database/db_connect.js";
 import { afterAll, jest } from "@jest/globals";
 
@@ -105,7 +105,8 @@ describe("cd comps routes", () => {
       goodCdCompData.tracks[0][1] = "one hell of a track title";
       const res = await request(app).post("/cd-comps").send(goodCdCompData);
       expect(res.status).toBe(201);
-      expect(Number.isInteger(res.body)).toBe(true);
+      expect(Number.isInteger(res.body.titleId)).toBe(true);
+      // still have to do cleanup
     });
   });
 });

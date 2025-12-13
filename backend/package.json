@@ -5,9 +5,9 @@
   "license": "ISC",
   "author": "Steve Majewski",
   "type": "module",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon npm index.js",
+    "dev": "nodemon server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll"
   },
   "dependencies": {

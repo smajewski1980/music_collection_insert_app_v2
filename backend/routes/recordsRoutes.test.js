@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "..";
+import app from "../index.js";
 import pool from "../database/db_connect.js";
 import { jest } from "@jest/globals";
 
