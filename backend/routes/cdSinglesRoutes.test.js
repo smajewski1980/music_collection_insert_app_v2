@@ -7,7 +7,7 @@ const goodCdSingleData = {
   artist: "One Single Artist",
   title: "One Single Title",
   year: 1980,
-  case_type: "Slimline",
+  caseType: "Slimline",
   tracks: [
     "Track Title One",
     "Track Title One(Radio Version)",
@@ -73,12 +73,23 @@ describe("cd singles routes", () => {
           .send({ ...goodCdSingleData, year: "1980" })
           .expect(400);
       });
-      it.todo("returns 400 if given no case type");
-      it.todo("returns 400 if given no tracks");
-      it.todo("returns 400 if given empty string for track name");
-      it.todo(
-        "returns 400 if given a number instead of a string for a track name",
-      );
+      it("returns 400 if given no case type", async () => {
+        await request(app)
+          .post("/cd-singles")
+          .send({ ...goodCdSingleData, caseType: "" })
+          .expect(400);
+      });
+      it("returns 400 if given no tracks", async () => {
+        await request(app)
+          .post("/cd-singles")
+          .send({ ...goodCdSingleData, tracks: [] })
+          .expect(400);
+      });
+      it("returns 400 if given empty string for track name", async () => {
+        const testData = { ...goodCdSingleData };
+        testData.tracks[0] = "";
+        await request(app).post("/cd-singles").send(testData).expect(400);
+      });
     });
 
     it.todo(

@@ -26,6 +26,13 @@ router.post(
     .withMessage("Year must be four digits")
     .custom(isActualNumber)
     .withMessage("Year must be a valid number"),
+  body("caseType").exists().notEmpty().isString().escape(),
+  body("tracks").exists().isArray({ min: 1 }).escape(),
+  body("tracks.*")
+    .notEmpty()
+    .withMessage("Track name can not be empty")
+    .isString()
+    .escape(),
   postCdSinglesContoller,
 );
 
