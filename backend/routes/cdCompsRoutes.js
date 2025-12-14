@@ -2,13 +2,7 @@ import express from "express";
 const router = express.Router();
 import { body } from "express-validator";
 import postCdCompsController from "../controllers/postCdCompsController.js";
-
-function isActualNumber(value) {
-  if (typeof value !== "number") {
-    throw new Error("Input must be of type number");
-  }
-  return true;
-}
+import isActualNumber from "../utilities/isActualNumber.js";
 
 function checkArtist(value) {
   console.log(value);

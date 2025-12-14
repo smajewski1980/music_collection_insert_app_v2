@@ -2,13 +2,7 @@ import express from "express";
 const router = express.Router();
 import { body } from "express-validator";
 import postRecordsController from "../controllers/postRecordsController.js";
-
-function isActualNumber(value) {
-  if (typeof value !== "number") {
-    throw new Error("Input must be of type number");
-  }
-  return true;
-}
+import isActualNumber from "../utilities/isActualNumber.js";
 
 router.post(
   "/",
