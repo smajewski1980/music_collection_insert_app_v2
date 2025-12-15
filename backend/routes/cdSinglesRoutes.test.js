@@ -99,10 +99,18 @@ describe("cd singles routes", () => {
     it("returns 201 and the single id when given good single and track data", async () => {
       const res = await request(app).post("/cd-singles").send(goodCdSingleData);
 
-      const singleId = res.body.single_id;
+      const singleId = res.body;
+      console.log(singleId);
       expect(res.status).toBe(201);
-      expect(Number.isInteger(singleId));
-      // cleanup
+      expect(Number.isInteger(singleId)).toBe(true);
+
+      // delete the just made test entry
+      const cleanupRes = await pool.query(
+        "DELETE FROM cd_singles WHERE single_id = $1",
+        [singleId],
+      );
+      expect(cleanupRes.rowCount).toBe(1);
+      pool.end();
     });
   });
 });

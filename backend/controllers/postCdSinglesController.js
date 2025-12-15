@@ -38,7 +38,6 @@ export default async function postCdSinglesContoller(req, res, next) {
 
         // commit transaction and return id
         await pool.query("COMMIT");
-        await pool.end();
         return res.status(201).send(singleId);
       } catch (error) {
         await pool.query("ROLLBACK");
