@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../index.js";
 import pool from "../database/db_connect.js";
-import { jest } from "@jest/globals";
+import { afterAll, jest } from "@jest/globals";
 
 const goodCdSingleData = {
   artist: "One Single Artist",
@@ -90,10 +90,19 @@ describe("cd singles routes", () => {
         testData.tracks[0] = "";
         await request(app).post("/cd-singles").send(testData).expect(400);
       });
+
+      afterAll(() => {
+        goodCdSingleData.tracks[0] = "Track Title One";
+      });
     });
 
-    it.todo(
-      "returns 201 and the single id when given good single and track data",
-    );
+    it("returns 201 and the single id when given good single and track data", async () => {
+      const res = await request(app).post("/cd-singles").send(goodCdSingleData);
+
+      const singleId = res.body.single_id;
+      expect(res.status).toBe(201);
+      expect(Number.isInteger(singleId));
+      // cleanup
+    });
   });
 });
