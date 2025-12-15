@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../index.js";
 import pool from "../database/db_connect.js";
-import { afterAll, jest } from "@jest/globals";
+import { afterAll, beforeEach, jest } from "@jest/globals";
 
 const goodCdSingleData = {
   artist: "One Single Artist",
@@ -18,9 +18,23 @@ const goodCdSingleData = {
 
 describe("cd singles routes", () => {
   describe("check error handling for db calls", () => {
-    it.todo(
-      "POST /cd-singles returns 500 if there is a problem connecting to the db",
-    );
+    let poolSpy;
+
+    beforeEach(() => {
+      poolSpy = jest.spyOn(pool, "query");
+    });
+
+    afterEach(() => {
+      poolSpy.mockRestore();
+    });
+
+    it("POST /cd-singles returns 500 if there is a problem connecting to the db", async () => {
+      poolSpy.mockImplementation(() => {
+        throw new Error("PostgreSQL database error: Connection refused");
+      });
+
+      await request(app).post("/cd-singles").send(goodCdSingleData).expect(500);
+    });
   });
 
   describe("POST /cd-singles", () => {
@@ -100,7 +114,6 @@ describe("cd singles routes", () => {
       const res = await request(app).post("/cd-singles").send(goodCdSingleData);
 
       const singleId = res.body;
-      console.log(singleId);
       expect(res.status).toBe(201);
       expect(Number.isInteger(singleId)).toBe(true);
 
