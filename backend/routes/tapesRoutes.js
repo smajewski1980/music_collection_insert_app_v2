@@ -13,7 +13,6 @@ function validateNeedsRepair(val) {
 
 function validateSpeed(val) {
   if (val === "3 3/4" || val === "7 1/4" || val === "na") {
-    console.log(val);
     return true;
   }
   throw new Error("speed can only be 3 3/4, 7 1/4 or na");

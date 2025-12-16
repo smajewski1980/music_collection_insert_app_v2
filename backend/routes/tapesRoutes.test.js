@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../index.js";
 import pool from "../database/db_connect.js";
-import { describe, jest } from "@jest/globals";
+import { afterEach, beforeEach, describe, jest } from "@jest/globals";
 
 const goodTapeData = {
   artist: "Tape Test Artist One",
@@ -14,7 +14,23 @@ const goodTapeData = {
 
 describe("tapes routes", () => {
   describe("check error handling for db calls", () => {
-    it.todo("POST /tapes returns 500 if there is a prob connecting to db");
+    let poolSpy;
+
+    beforeEach(() => {
+      poolSpy = jest.spyOn(pool, "query");
+    });
+
+    afterEach(() => {
+      poolSpy.mockRestore();
+    });
+
+    it("POST /tapes returns 500 if there is a prob connecting to db", async () => {
+      poolSpy.mockImplementation(() => {
+        throw new Error("PostgreSQL database error: Connection refused");
+      });
+
+      await request(app).post("/tapes").send(goodTapeData).expect(500);
+    });
   });
   describe("POST /tapes", () => {
     describe("invalid form data", () => {
@@ -85,6 +101,21 @@ describe("tapes routes", () => {
           .expect(400);
       });
     });
-    it.todo("returns 201 and the tape id when given good tape data");
+    it("returns 201 and the tape id when given good tape data", async () => {
+      const res = await request(app)
+        .post("/tapes")
+        .send(goodTapeData)
+        .expect(201);
+
+      const tapeId = res.body;
+      expect(Number.isInteger(tapeId)).toBe(true);
+
+      // cleanup
+      const cleanupRes = await pool.query("DELETE FROM tapes where id = $1", [
+        tapeId,
+      ]);
+      expect(cleanupRes.rowCount).toBe(1);
+      pool.end();
+    });
   });
 });
