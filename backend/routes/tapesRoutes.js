@@ -5,13 +5,18 @@ import postTapesController from "../controllers/postTapesController.js";
 import isActualNumber from "../utilities/isActualNumber.js";
 
 function validateNeedsRepair(val) {
-  if (isActualNumber(val)) {
-    throw new Error("needs repair field can only be Yes, No or na");
-  }
   if (val === "Yes" || val === "No" || val === "na") {
     return true;
   }
   throw new Error("needs repair field can only be Yes, No or na");
+}
+
+function validateSpeed(val) {
+  if (val === "3 3/4" || val === "7 1/4" || val === "na") {
+    console.log(val);
+    return true;
+  }
+  throw new Error("speed can only be 3 3/4, 7 1/4 or na");
 }
 
 router.post(
@@ -42,6 +47,7 @@ router.post(
     .custom(isActualNumber)
     .escape(),
   body("needsRepair").exists().custom(validateNeedsRepair).escape(),
+  body("speed").exists().custom(validateSpeed).escape(),
   postTapesController,
 );
 

@@ -78,15 +78,12 @@ describe("tapes routes", () => {
           .send({ ...goodTapeData, needsRepair: "Unicorns Rock!" })
           .expect(400);
       });
-      it("returns 400 if given a number instead of a string for needs repair", async () => {
+      it("returns 400 if given a string other than 3 3/4, 7 1/4, na for speed", async () => {
         await request(app)
           .post("/tapes")
-          .send({ ...goodTapeData, needRepair: 47 })
+          .send({ ...goodTapeData, speed: "rabbit" })
           .expect(400);
       });
-      it.todo(
-        "returns 400 if given a string other than 3 3/4, 7 1/4, na for speed",
-      );
     });
     it.todo("returns 201 and the tape id when given good tape data");
   });
