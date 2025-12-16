@@ -29,7 +29,7 @@ export default async function postRecordsController(req, res, next) {
           label,
         ],
       );
-      console.log("added to db:", result.rows[0]);
+      console.log(`Record ${title} by ${artist} was added to the db.`);
       return res.status(201).send(result.rows[0].id);
     } catch (error) {
       const err = new Error(error);

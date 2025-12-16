@@ -11,6 +11,7 @@ export default async function (req, res, next) {
         "INSERT INTO cds(artist, title, location) VALUES($1, $2, $3) RETURNING id",
         [artist, title, location],
       );
+      console.log(`Cd ${title} by ${artist} has been added to the db.`);
       return res.status(201).send(result.rows[0].id);
     } catch (error) {
       return next(new Error(error));

@@ -38,6 +38,9 @@ export default async function postCdSinglesContoller(req, res, next) {
 
         // commit transaction and return id
         await pool.query("COMMIT");
+        console.log(
+          `Single ${title} by ${artist} has been committed to the db.`,
+        );
         return res.status(201).send(singleId);
       } catch (error) {
         await pool.query("ROLLBACK");
