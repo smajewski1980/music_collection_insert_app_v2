@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../index.js";
 import pool from "../database/db_connect.js";
-import { jest } from "@jest/globals";
+import { afterEach, beforeEach, jest } from "@jest/globals";
 
 const goodCdMainData = {
   artist: "TEST artist one",
@@ -11,7 +11,22 @@ const goodCdMainData = {
 
 describe("/cds-main routes", () => {
   describe("check error handling for db calls", () => {
-    it.todo("POST /cds-main returns 500 if there is a prob connecting to db");
+    let poolSpy;
+
+    beforeEach(() => {
+      poolSpy = jest.spyOn(pool, "query");
+    });
+
+    afterEach(() => {
+      poolSpy.mockRestore();
+    });
+
+    it("POST /cds-main returns 500 if there is a prob connecting to db", async () => {
+      poolSpy.mockImplementation(() => {
+        throw new Error("PostgreSQL database error: Connection refused");
+      });
+      await request(app).post("/cds-main").send(goodCdMainData).expect(500);
+    });
   });
   describe("POST /cds-main", () => {
     describe("invalid form data", () => {
