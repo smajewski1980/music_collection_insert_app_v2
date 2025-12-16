@@ -4,17 +4,6 @@ import { body } from "express-validator";
 import postCdCompsController from "../controllers/postCdCompsController.js";
 import isActualNumber from "../utilities/isActualNumber.js";
 
-function checkArtist(value) {
-  console.log(value);
-  if (typeof value.artist === "number") {
-    throw new Error("All track data must be of type string.");
-  }
-  if (!value || !value.artist) {
-    throw new Error("All tracks must have an artist");
-  }
-  return true;
-}
-
 router.post(
   "/",
   body("title")
