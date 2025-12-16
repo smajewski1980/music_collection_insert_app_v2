@@ -21,36 +21,31 @@ router.post(
     .exists()
     .notEmpty()
     .withMessage("Title can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("year")
     .exists()
     .withMessage("Year can not be null")
     .custom(isActualNumber)
     .withMessage("Year must be a number")
-    .isLength({ min: 4, max: 4 })
-    .escape(),
+    .isLength({ min: 4, max: 4 }),
   body("location")
     .exists()
     .notEmpty()
     .withMessage("Location can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("tracks").exists().isArray({ min: 1 }).escape(),
-  body("tracks.*")
-    .custom((val, { req }) => {
-      const artist = val.split(",")[0];
-      const track = val.split(",")[1];
-      if (artist === "") {
-        throw new Error("Artist must not be empty.");
-      }
-      if (track === "") {
-        throw new Error("Track must not be empty.");
-      }
+  body("tracks.*").custom((val, { req }) => {
+    const artist = val.split(",")[0];
+    const track = val.split(",")[1];
+    if (artist === "") {
+      throw new Error("Artist must not be empty.");
+    }
+    if (track === "") {
+      throw new Error("Track must not be empty.");
+    }
 
-      return true;
-    })
-    .escape(),
+    return true;
+  }),
   postCdCompsController,
 );
 

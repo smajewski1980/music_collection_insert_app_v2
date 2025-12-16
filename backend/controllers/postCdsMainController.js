@@ -3,9 +3,18 @@ import pool from "../database/db_connect.js";
 
 export default async function (req, res, next) {
   const valRes = validationResult(req);
+  const { artist, title, location } = req.body;
 
   if (valRes.isEmpty()) {
-    return res.sendStatus(418);
+    try {
+      const result = await pool.query(
+        "INSERT INTO cds(artist, title, location) VALUES($1, $2, $3) RETURNING id",
+        [artist, title, location],
+      );
+      return res.status(201).send(result.rows[0].id);
+    } catch (error) {
+      return next(new Error(error));
+    }
   }
 
   const err = new Error(valRes.errors);

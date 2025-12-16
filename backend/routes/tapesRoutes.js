@@ -24,29 +24,25 @@ router.post(
     .exists()
     .notEmpty()
     .withMessage("artist can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("title")
     .exists()
     .notEmpty()
     .withMessage("title can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("location")
     .exists()
     .notEmpty()
     .withMessage("location can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("year")
     .exists()
     .notEmpty()
     .withMessage("year can not be empty")
     .isLength({ min: 4, max: 4 })
-    .custom(isActualNumber)
-    .escape(),
-  body("needsRepair").exists().custom(validateNeedsRepair).escape(),
-  body("speed").exists().custom(validateSpeed).escape(),
+    .custom(isActualNumber),
+  body("needsRepair").exists().custom(validateNeedsRepair),
+  body("speed").exists().custom(validateSpeed),
   postTapesController,
 );
 

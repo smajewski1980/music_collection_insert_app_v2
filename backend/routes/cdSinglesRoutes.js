@@ -10,14 +10,12 @@ router.post(
     .exists()
     .notEmpty()
     .withMessage("Artist can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("title")
     .exists()
     .notEmpty()
     .withMessage("Title can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("year")
     .exists()
     .notEmpty()
@@ -26,13 +24,12 @@ router.post(
     .withMessage("Year must be four digits")
     .custom(isActualNumber)
     .withMessage("Year must be a valid number"),
-  body("caseType").exists().notEmpty().isString().escape(),
-  body("tracks").exists().isArray({ min: 1 }).escape(),
+  body("caseType").exists().notEmpty().isString(),
+  body("tracks").exists().isArray({ min: 1 }),
   body("tracks.*")
     .notEmpty()
     .withMessage("Track name can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   postCdSinglesContoller,
 );
 

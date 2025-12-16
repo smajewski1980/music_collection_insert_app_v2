@@ -9,19 +9,13 @@ router.post(
     .exists()
     .notEmpty()
     .withMessage("artist can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("title")
     .exists()
     .notEmpty()
     .withMessage("title can not be empty")
-    .isString()
-    .escape(),
-  body("location")
-    .exists()
-    .notEmpty()
-    .withMessage("location can not be empty")
-    .escape(),
+    .isString(),
+  body("location").exists().notEmpty().withMessage("location can not be empty"),
   postCdsMainController,
 );
 

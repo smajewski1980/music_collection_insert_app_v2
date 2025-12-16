@@ -47,6 +47,20 @@ describe("/cds-main routes", () => {
       });
     });
 
-    it.todo("returns 201 and the cd id when given good cd data");
+    it("returns 201 and the cd id when given good cd data", async () => {
+      const res = await request(app)
+        .post("/cds-main")
+        .send(goodCdMainData)
+        .expect(201);
+      const cdId = res.body;
+      expect(Number.isInteger(cdId)).toBe(true);
+
+      // cleanup
+      const cleanupRes = await pool.query("DELETE FROM cds WHERE id = $1", [
+        cdId,
+      ]);
+      expect(cleanupRes.rowCount).toBe(1);
+      pool.end();
+    });
   });
 });

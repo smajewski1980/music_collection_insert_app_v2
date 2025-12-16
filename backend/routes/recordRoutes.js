@@ -10,55 +10,47 @@ router.post(
     .exists()
     .notEmpty()
     .withMessage("Artist can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("title")
     .exists()
     .notEmpty()
     .withMessage("Title can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("location")
     .exists()
     .notEmpty()
     .withMessage("Location can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("year")
     .exists()
     .withMessage("Year can not be null")
     .custom(isActualNumber)
     .withMessage("Year must be a number")
-    .isLength({ min: 4, max: 4 })
-    .escape(),
+    .isLength({ min: 4, max: 4 }),
   body("diameter")
     .exists()
     .notEmpty()
     .withMessage("Diameter field can not be empty")
-    .isString()
-    .escape(),
+    .isString(),
   body("sleeve_condition")
     .exists()
     .notEmpty()
     .matches(/^\*+$/)
     .withMessage("Field may only contain *")
     .isLength({ min: 1, max: 5 })
-    .withMessage("Field must contain between 1 and 5 stars")
-    .escape(),
+    .withMessage("Field must contain between 1 and 5 stars"),
   body("record_condition")
     .exists()
     .notEmpty()
     .matches(/^\*+$/)
     .withMessage("Field may only contain *")
     .isLength({ min: 1, max: 5 })
-    .withMessage("Field must contain between 1 and 5 stars")
-    .escape(),
+    .withMessage("Field must contain between 1 and 5 stars"),
   body("label")
     .exists()
     .notEmpty()
     .withMessage("Label field can not be empty.")
-    .isString()
-    .escape(),
+    .isString(),
   postRecordsController,
 );
 
