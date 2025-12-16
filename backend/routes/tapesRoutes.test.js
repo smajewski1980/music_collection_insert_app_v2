@@ -1,7 +1,7 @@
 import request from "supertest";
 import app from "../index.js";
 import pool from "../database/db_connect.js";
-import { afterEach, beforeEach, describe, jest } from "@jest/globals";
+import { afterEach, beforeEach, jest } from "@jest/globals";
 
 const goodTapeData = {
   artist: "Tape Test Artist One",
