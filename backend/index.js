@@ -13,6 +13,7 @@ app.use("/cd-comps", cdCompsRoutes);
 app.use("/cd-singles", cdSinglesRoutes);
 app.use("/tapes", tapesRoutes);
 app.use("/cds-main", cdsMainRoutes);
+app.use(express.static("../frontend"));
 
 app.get("/errortest", (req, res, next) => {
   return next(new Error());
