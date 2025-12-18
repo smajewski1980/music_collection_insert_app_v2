@@ -23,8 +23,6 @@ export default async function (req, res, next) {
       cdComps: cdCompsResult.rows,
       cdSingles: cdSinglesResult.rows,
     };
-
-    pool.end();
     return res.status(200).json(locationData);
   } catch (error) {
     next(new Error(error));

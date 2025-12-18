@@ -1,9 +1,12 @@
 import request from "supertest";
 import app from "../index.js";
 import pool from "../database/db_connect.js";
-import { afterEach, beforeEach, jest } from "@jest/globals";
+import { afterAll, afterEach, beforeEach, jest } from "@jest/globals";
 
 describe("GET locations routes", () => {
+  afterAll(() => {
+    pool.end();
+  });
   describe("check error handling for db calls", () => {
     let poolSpy;
 
