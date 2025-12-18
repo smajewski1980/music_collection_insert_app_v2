@@ -5,6 +5,16 @@ function customSort(a, b) {
   });
 }
 
+function getMostCurrentCdSingles(array) {
+  singleLocs = [];
+
+  array.forEach((loc) => {
+    singleLocs.push(loc.case_type);
+  });
+
+  return singleLocs;
+}
+
 function getMostCurrentSubLoc(array) {
   const misc = [];
   const classical = [];
@@ -156,7 +166,7 @@ function getMostCurrentLoc(array, format) {
       console.log("cds");
       break;
     case "cdSingles":
-      console.log("cd singles");
+      return getMostCurrentCdSingles(array);
       break;
     case "cdComps":
       console.log("cd comps");
@@ -174,11 +184,12 @@ function processLocations(data) {
   const cdSinglesLocs = data.cdSingles;
   const currTapeLoc = getMostCurrentLoc(tapesLocs, "tapes");
   const currRecordsLocs = getMostCurrentLoc(recordsLocs, "records");
+  const currCdSinglesLocs = getMostCurrentLoc(cdSinglesLocs, "cdSingles");
   getMostCurrentLoc(cdsLocs, "cds");
-  getMostCurrentLoc(cdSinglesLocs, "cdSingles");
   getMostCurrentLoc(cdCompsLocs, "cdComps");
   console.log("curr tapes", currTapeLoc); // <--these will be the final result to use for the ui
   console.log("curr records", currRecordsLocs);
+  console.log("curr cd singles", currCdSinglesLocs);
 }
 
 async function getLocations() {
