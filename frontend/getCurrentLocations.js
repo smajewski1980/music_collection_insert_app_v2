@@ -1,8 +1,45 @@
+// this will sort strings how we want them
 function customSort(a, b) {
   return a.localeCompare(b, undefined, {
     numeric: true,
     sensitivity: "base",
   });
+}
+
+function getMostCurrentCdComps(array) {
+  // sort out by category
+  classical = [];
+  soundtracks = [];
+  va = [];
+  xmas = [];
+
+  array.forEach((loc) => {
+    if (loc.location.includes("Classical")) {
+      classical.push(loc.location);
+    }
+    if (loc.location.includes("Soundtrack")) {
+      soundtracks.push(loc.location);
+    }
+    if (loc.location.includes("Various")) {
+      va.push(loc.location);
+    }
+    if (loc.location.includes("X-mas")) {
+      xmas.push(loc.location);
+    }
+  });
+
+  // get current sorted vals
+  const currClassical = classical.sort(customSort);
+  const currSoundtracks = soundtracks.sort(customSort);
+  const currVarious = va.sort(customSort);
+  const currXmas = xmas.sort(customSort);
+
+  return [
+    currClassical.at(-1),
+    currSoundtracks.at(-1),
+    currVarious.at(-1),
+    currXmas.at(-1),
+  ];
 }
 
 function getMostCurrentCdSingles(array) {
@@ -169,7 +206,7 @@ function getMostCurrentLoc(array, format) {
       return getMostCurrentCdSingles(array);
       break;
     case "cdComps":
-      console.log("cd comps");
+      return getMostCurrentCdComps(array);
       break;
     default:
       break;
@@ -185,11 +222,12 @@ function processLocations(data) {
   const currTapeLoc = getMostCurrentLoc(tapesLocs, "tapes");
   const currRecordsLocs = getMostCurrentLoc(recordsLocs, "records");
   const currCdSinglesLocs = getMostCurrentLoc(cdSinglesLocs, "cdSingles");
+  const currCdComps = getMostCurrentLoc(cdCompsLocs, "cdComps");
   getMostCurrentLoc(cdsLocs, "cds");
-  getMostCurrentLoc(cdCompsLocs, "cdComps");
   console.log("curr tapes", currTapeLoc); // <--these will be the final result to use for the ui
   console.log("curr records", currRecordsLocs);
   console.log("curr cd singles", currCdSinglesLocs);
+  console.log("curr cd comps", currCdComps);
 }
 
 async function getLocations() {
