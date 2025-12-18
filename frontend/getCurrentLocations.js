@@ -6,6 +6,64 @@ function customSort(a, b) {
   });
 }
 
+function getMostCurrentCdsMainLoc(array) {
+  const misc = [];
+  const classical = [];
+  const country = [];
+  const hipHop = [];
+  const jazz = [];
+  const nature = [];
+  const pop = [];
+  const world = [];
+  const xmas = [];
+
+  // sort out by category
+  array.forEach((loc) => {
+    if (loc.location.includes("Classical")) {
+      classical.push(loc.location);
+    } else if (loc.location.includes("Country")) {
+      country.push(loc.location);
+    } else if (loc.location.includes("Hip Hop")) {
+      hipHop.push(loc.location);
+    } else if (loc.location.includes("Jazz")) {
+      jazz.push(loc.location);
+    } else if (loc.location.includes("Nature")) {
+      nature.push(loc.location);
+    } else if (loc.location.includes("Pop/Rock")) {
+      pop.push(loc.location);
+    } else if (loc.location.includes("World")) {
+      world.push(loc.location);
+    } else if (loc.location.includes("X-mas")) {
+      xmas.push(loc.location);
+    } else {
+      misc.push(loc.location);
+    }
+  });
+
+  // get current sorted vals
+  const currClassical = classical.sort(customSort);
+  const currCountry = country.sort(customSort);
+  const currHipHop = hipHop.sort(customSort);
+  const currJazz = jazz.sort(customSort);
+  const currNature = nature.sort(customSort);
+  const currPop = pop.sort(customSort);
+  const currWorld = world.sort(customSort);
+  const currXmas = xmas.sort(customSort);
+
+  // return vals
+  return [
+    currClassical.at(-1),
+    currCountry.at(-1),
+    currHipHop.at(-1),
+    currJazz.at(-1),
+    currNature.at(-1),
+    currPop.at(-1),
+    currWorld.at(-1),
+    currXmas.at(-1),
+    ...misc,
+  ];
+}
+
 function getMostCurrentCdComps(array) {
   // sort out by category
   classical = [];
@@ -45,6 +103,7 @@ function getMostCurrentCdComps(array) {
 function getMostCurrentCdSingles(array) {
   singleLocs = [];
 
+  // these didnt need any modification other than just getting the vals into the return array
   array.forEach((loc) => {
     singleLocs.push(loc.case_type);
   });
@@ -62,6 +121,7 @@ function getMostCurrentSubLoc(array) {
   const pop = [];
   const soundtracks = [];
   const various = [];
+
   // sort out by category
   array.forEach((loc) => {
     currLoc = loc.split(" ")[1];
@@ -200,7 +260,7 @@ function getMostCurrentLoc(array, format) {
       return getMostCurrentRecordsLoc(array);
       break;
     case "cds":
-      console.log("cds");
+      return getMostCurrentCdsMainLoc(array);
       break;
     case "cdSingles":
       return getMostCurrentCdSingles(array);
@@ -223,11 +283,13 @@ function processLocations(data) {
   const currRecordsLocs = getMostCurrentLoc(recordsLocs, "records");
   const currCdSinglesLocs = getMostCurrentLoc(cdSinglesLocs, "cdSingles");
   const currCdComps = getMostCurrentLoc(cdCompsLocs, "cdComps");
-  getMostCurrentLoc(cdsLocs, "cds");
-  console.log("curr tapes", currTapeLoc); // <--these will be the final result to use for the ui
-  console.log("curr records", currRecordsLocs);
-  console.log("curr cd singles", currCdSinglesLocs);
-  console.log("curr cd comps", currCdComps);
+  const currCdsMain = getMostCurrentLoc(cdsLocs, "cds");
+
+  console.log("curr tapes", currTapeLoc); // <--these will be the final results to use for the ui
+  console.log("curr records", currRecordsLocs); // <--these will be the final results to use for the ui
+  console.log("curr cd singles", currCdSinglesLocs); // <--these will be the final results to use for the ui
+  console.log("curr cd comps", currCdComps); // <--these will be the final results to use for the ui
+  console.log("curr cds main", currCdsMain); // <--these will be the final results to use for the ui
 }
 
 async function getLocations() {
