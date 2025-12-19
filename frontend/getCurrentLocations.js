@@ -66,10 +66,10 @@ function getMostCurrentCdsMainLoc(array) {
 
 function getMostCurrentCdComps(array) {
   // sort out by category
-  classical = [];
-  soundtracks = [];
-  va = [];
-  xmas = [];
+  const classical = [];
+  const soundtracks = [];
+  const va = [];
+  const xmas = [];
 
   array.forEach((loc) => {
     if (loc.location.includes("Classical")) {
@@ -100,7 +100,7 @@ function getMostCurrentCdComps(array) {
   ];
 }
 
-function getMostCurrentCdSingles(array) {
+function breakDownCdSinglesLocs(array) {
   singleLocs = [];
 
   // these didnt need any modification other than just getting the vals into the return array
@@ -174,7 +174,9 @@ function getMostCurrentRecordsLoc(array) {
   const rec45s = [];
   const rec33s = [];
   const rec78s = [];
-  const misc = ["Herb Alpert Records", '12" Singles']; //<-- when we switch over to this app, we will change the name of the loc to start with 33s in the db
+  // when we switch over to this app, we will change the name of the herb loc to start with 33s in the db
+  const misc = ["Herb Alpert Records", '12" Singles'];
+
   // distibute the values to the appropriate array
   array.forEach((loc) => {
     if (loc.location.includes("45s ")) {
@@ -189,18 +191,9 @@ function getMostCurrentRecordsLoc(array) {
   });
 
   // sort the sortables and get currents
-  const sorted45s = rec45s.sort((a, b) => {
-    return a.localeCompare(b, undefined, {
-      numeric: true,
-      sensitivity: "base",
-    });
-  });
-  const sorted78s = rec78s.sort((a, b) => {
-    return a.localeCompare(b, undefined, {
-      numeric: true,
-      sensitivity: "base",
-    });
-  });
+  const sorted45s = rec45s.sort(customSort);
+  const sorted78s = rec78s.sort(customSort);
+
   const curren33sLocs = getMostCurrentSubLoc(rec33s);
   const current45sLoc = sorted45s.at(-1);
   const current78sLoc = sorted78s.at(-1);
@@ -212,6 +205,7 @@ function getMostCurrentTapeLoc(array) {
   const eightTracks = [];
   const reelToReel = [];
   const cassettes = [];
+
   // distribute the values to the appropriate array
   array.forEach((loc) => {
     if (loc.location.includes("8-Track")) {
@@ -226,28 +220,15 @@ function getMostCurrentTapeLoc(array) {
   });
 
   // sort the arrays
-  const sortedEightTracks = eightTracks.sort((a, b) => {
-    return a.localeCompare(b, undefined, {
-      numeric: true,
-      sensitivity: "base",
-    });
-  });
-  const sortedReelToReel = reelToReel.sort((a, b) => {
-    return a.localeCompare(b, undefined, {
-      numeric: true,
-      sensitivity: "base",
-    });
-  });
-  const sortedCassettes = cassettes.sort((a, b) => {
-    return a.localeCompare(b, undefined, {
-      numeric: true,
-      sensitivity: "base",
-    });
-  });
+  const sortedEightTracks = eightTracks.sort(customSort);
+  const sortedReelToReel = reelToReel.sort(customSort);
+  const sortedCassettes = cassettes.sort(customSort);
+
   // set the highest value as current
   const currEightLoc = sortedEightTracks.at(-1);
   const currReelLoc = sortedReelToReel.at(-1);
   const currCassLoc = sortedCassettes.at(-1);
+
   return [currEightLoc, currCassLoc, currReelLoc];
 }
 
@@ -255,21 +236,16 @@ function getMostCurrentLoc(array, format) {
   switch (format) {
     case "tapes":
       return getMostCurrentTapeLoc(array);
-      break;
     case "records":
       return getMostCurrentRecordsLoc(array);
-      break;
     case "cds":
       return getMostCurrentCdsMainLoc(array);
-      break;
     case "cdSingles":
-      return getMostCurrentCdSingles(array);
-      break;
+      return breakDownCdSinglesLocs(array);
     case "cdComps":
       return getMostCurrentCdComps(array);
-      break;
     default:
-      break;
+      return [];
   }
 }
 
