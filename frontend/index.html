@@ -15,8 +15,75 @@
       src="getCurrentLocations.js"
       defer
     ></script>
+    <script
+      src="script.js"
+      defer
+    ></script>
   </head>
   <body>
-    <h1>hello world</h1>
+    <header>
+      <h1>Music Catalog Insert App</h1>
+      <nav>
+        <ul>
+          <li>
+            <button
+              data-form="cd-comps-form"
+              class="btn-cd-comps"
+            >
+              Cd-Compilations
+            </button>
+          </li>
+          <li>
+            <button
+              data-form="cd-singles-form"
+              class="btn-cd-singles"
+            >
+              Cd-Singles
+            </button>
+          </li>
+          <li>
+            <button
+              data-form="cd-main-form"
+              class="btn-cd-main"
+            >
+              Cd-Main Catalog
+            </button>
+          </li>
+          <li>
+            <button
+              data-form="records-form"
+              class="btn-records"
+            >
+              Records
+            </button>
+          </li>
+          <li>
+            <button
+              data-form="tapes-form"
+              class="btn-tapes"
+            >
+              Tapes
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <form id="cd-comps-form">
+        <h2>Cd Compilations Form</h2>
+      </form>
+      <form id="cd-singles-form">
+        <h2>Cd Singles Form</h2>
+      </form>
+      <form id="cd-main-form">
+        <h2>Cd Main Catalog Form</h2>
+      </form>
+      <form id="records-form">
+        <h2>Records Form</h2>
+      </form>
+      <form id="tapes-form">
+        <h2>Tapes Form</h2>
+      </form>
+    </main>
   </body>
 </html>

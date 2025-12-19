@@ -261,11 +261,11 @@ function processLocations(data) {
   const currCdComps = getMostCurrentLoc(cdCompsLocs, "cdComps");
   const currCdsMain = getMostCurrentLoc(cdsLocs, "cds");
 
-  console.log("curr tapes", currTapeLoc); // <--these will be the final results to use for the ui
-  console.log("curr records", currRecordsLocs); // <--these will be the final results to use for the ui
-  console.log("curr cd singles", currCdSinglesLocs); // <--these will be the final results to use for the ui
-  console.log("curr cd comps", currCdComps); // <--these will be the final results to use for the ui
-  console.log("curr cds main", currCdsMain); // <--these will be the final results to use for the ui
+  // console.log("curr tapes", currTapeLoc); // <--these will be the final results to use for the ui
+  // console.log("curr records", currRecordsLocs); // <--these will be the final results to use for the ui
+  // console.log("curr cd singles", currCdSinglesLocs); // <--these will be the final results to use for the ui
+  // console.log("curr cd comps", currCdComps); // <--these will be the final results to use for the ui
+  // console.log("curr cds main", currCdsMain); // <--these will be the final results to use for the ui
 }
 
 async function getLocations() {

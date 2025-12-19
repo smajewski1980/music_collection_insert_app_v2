@@ -24,3 +24,25 @@ body {
   color: light-dark(black, white);
   background: light-dark(white, black);
 }
+
+h1 {
+  margin-block: 1rem;
+}
+
+nav {
+  margin-block-end: 1rem;
+}
+
+nav ul {
+  display: flex;
+  gap: 1rem;
+  list-style-type: none;
+}
+
+form {
+  display: none;
+}
+
+.active-form {
+  display: block;
+}
