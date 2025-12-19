@@ -10,6 +10,7 @@ const btnRecords = document.querySelector(".btn-records");
 const btnTapes = document.querySelector(".btn-tapes");
 const buttons = [btnComps, btnSingles, btnMain, btnRecords, btnTapes];
 const forms = [cdCompsForm, cdSinglesForm, cdMainForm, recordsForm, tapesForm];
+const cdsMainForm = document.getElementById("cd-main-form");
 
 function removeActiveFormClass() {
   forms.forEach((form) => {
@@ -26,3 +27,10 @@ function handleBtnClick(e) {
 buttons.forEach((btn) => {
   btn.addEventListener("click", handleBtnClick);
 });
+
+function handleCdsMainForm(e) {
+  e.preventDefault();
+  console.log("submitting cds main form");
+}
+
+cdsMainForm.addEventListener("submit", handleCdsMainForm);
