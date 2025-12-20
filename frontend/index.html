@@ -68,7 +68,9 @@
         </ul>
       </nav>
     </header>
+
     <main>
+      <!-- CD COMPS -->
       <form id="cd-comps-form">
         <h2>Cd Compilations Form</h2>
         <div class="form-group">
@@ -107,9 +109,13 @@
         </div>
         <button>submit</button>
       </form>
+
+      <!-- CD SINGLES -->
       <form id="cd-singles-form">
         <h2>Cd Singles Form</h2>
       </form>
+
+      <!-- CDS MAIN -->
       <form id="cd-main-form">
         <h2>Cd Main Catalog Form</h2>
         <div class="form-group">
@@ -130,17 +136,22 @@
         </div>
         <div class="form-group">
           <label for="cds-main-location">location</label>
-          <input
-            type="text"
-            name="artist"
+          <select
+            name="location"
             id="cds-main-location"
-          />
+          >
+            <option value="">will be loaded dynamically</option>
+          </select>
         </div>
         <button>submit</button>
       </form>
+
+      <!-- RECORDS -->
       <form id="records-form">
         <h2>Records Form</h2>
       </form>
+
+      <!-- TAPES -->
       <form id="tapes-form">
         <h2>Tapes Form</h2>
         <div class="form-group">
