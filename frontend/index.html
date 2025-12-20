@@ -70,7 +70,7 @@
     </header>
 
     <main>
-      <!-- CD COMPS -->
+      <!-- -----------------------------------------------CD COMPS -->
       <form id="cd-comps-form">
         <h2>Cd Compilations Form</h2>
         <div class="form-group">
@@ -79,6 +79,7 @@
             type="text"
             name="title"
             id="cd-comps-title"
+            autocomplete="off"
           />
         </div>
         <div class="form-group">
@@ -87,6 +88,7 @@
             type="number"
             name="year"
             id="cd-comps-year"
+            autocomplete="off"
           />
         </div>
         <div class="form-group">
@@ -110,12 +112,58 @@
         <button>submit</button>
       </form>
 
-      <!-- CD SINGLES -->
+      <!-- ------------------------------------------------------CD SINGLES -->
       <form id="cd-singles-form">
         <h2>Cd Singles Form</h2>
+        <div class="form-group">
+          <label for="cd-singles-artist">artist</label>
+          <input
+            type="text"
+            name="artist"
+            id="cd-singles-artist"
+            autocomplete="off"
+          />
+        </div>
+        <div class="form-group">
+          <label for="cd-singles-title">title</label>
+          <input
+            type="text"
+            name="title"
+            id="cd-singles-title"
+            autocomplete="off"
+          />
+        </div>
+        <div class="form-group">
+          <label for="">year</label>
+          <input
+            type="number"
+            name="year"
+            id="cd-singles-year"
+            autocomplete="off"
+          />
+        </div>
+        <div class="form-group">
+          <label for="cd-singles-case-type">case type</label>
+          <select
+            name="caseType"
+            id="cd-singles-case-type"
+          >
+            <option value="">will be added dynamically</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cd-singles-tracks">tracks</label>
+          <textarea
+            name="tracks"
+            id="cd-singles-tracks"
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
+        <button>submit</button>
       </form>
 
-      <!-- CDS MAIN -->
+      <!-- ----------------------------------------------------CDS MAIN -->
       <form id="cd-main-form">
         <h2>Cd Main Catalog Form</h2>
         <div class="form-group">
@@ -124,6 +172,7 @@
             type="text"
             name="artist"
             id="cds-main-artist"
+            autocomplete="off"
           />
         </div>
         <div class="form-group">
@@ -132,6 +181,7 @@
             type="text"
             name="artist"
             id="cds-main-title"
+            autocomplete="off"
           />
         </div>
         <div class="form-group">
@@ -140,18 +190,111 @@
             name="location"
             id="cds-main-location"
           >
-            <option value="">will be loaded dynamically</option>
+            <option value="">will be added dynamically</option>
           </select>
         </div>
         <button>submit</button>
       </form>
 
-      <!-- RECORDS -->
+      <!-- ----------------------------------------------------RECORDS -->
       <form id="records-form">
         <h2>Records Form</h2>
+        <div class="form-group">
+          <label for="records-artist">artist</label>
+          <input
+            type="text"
+            name="artist"
+            id="records-artist"
+            autocomplete="off"
+          />
+        </div>
+        <div class="form-group">
+          <label for="records-title">title</label>
+          <input
+            type="text"
+            name="title"
+            id="records-title"
+            autocomplete="off"
+          />
+        </div>
+        <div class="form-group">
+          <label for="records-location">location</label>
+          <select
+            name="location"
+            id="records-location"
+          >
+            <option value="">will be added dynamically</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="records-year">year</label>
+          <input
+            type="number"
+            name="year"
+            id="records-year"
+            autocomplete="off"
+          />
+        </div>
+        <div class="form-group">
+          <label for="records-diameter">diameter</label>
+          <select
+            name="diameter"
+            id="records-diameter"
+          >
+            <option value="12 inch">12 inch</option>
+            <option value="10 inch">10 inch</option>
+            <option value="7 inch">7 inch</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="records-sleeve-cond">sleeve condition</label>
+          <select
+            name="sleeveCondition"
+            id="records-sleeve-cond"
+          >
+            <option value="*">*</option>
+            <option value="**">**</option>
+            <option
+              value="***"
+              selected="true"
+            >
+              ***
+            </option>
+            <option value="****">****</option>
+            <option value="*****">*****</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="records-record-cond">record condition</label>
+          <select
+            name="recordCondition"
+            id="records-record-cond"
+          >
+            <option value="*">*</option>
+            <option value="**">**</option>
+            <option
+              value="***"
+              selected="true"
+            >
+              ***
+            </option>
+            <option value="****">****</option>
+            <option value="*****">*****</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="records-label">label</label>
+          <input
+            type="text"
+            name="label"
+            id="records-label"
+            autocomplete="off"
+          />
+        </div>
+        <button>submit</button>
       </form>
 
-      <!-- TAPES -->
+      <!-- -------------------------------------------------------TAPES -->
       <form id="tapes-form">
         <h2>Tapes Form</h2>
         <div class="form-group">
@@ -160,6 +303,7 @@
             type="text"
             name="artist"
             id="tapes-artist"
+            autocomplete="off"
           />
         </div>
         <div class="form-group">
@@ -168,6 +312,7 @@
             type="text"
             name="title"
             id="tapes-title"
+            autocomplete="off"
           />
         </div>
         <div class="form-group">
@@ -176,7 +321,7 @@
             name="location"
             id="tapes-location"
           >
-            <option value="">will be added dynamically later</option>
+            <option value="">will be added dynamically</option>
           </select>
         </div>
         <div class="form-group">
@@ -185,6 +330,7 @@
             type="number"
             name="year"
             id="tapes-year"
+            autocomplete="off"
           />
         </div>
         <div class="form-group">
@@ -217,6 +363,18 @@
         </div>
         <button>submit</button>
       </form>
+
+      <div class="increment-wrapper">
+        <input
+          type="checkbox"
+          name="increment-location"
+          id="increment-location"
+        />
+        <label for="increment-location">
+          later, this box when checked will increment the number of the location
+          for the active form.
+        </label>
+      </div>
     </main>
   </body>
 </html>

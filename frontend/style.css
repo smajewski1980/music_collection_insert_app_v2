@@ -35,12 +35,11 @@ h1 {
 
 nav {
   margin-block-end: 1rem;
-}
-
-nav ul {
-  display: flex;
-  gap: 1rem;
-  list-style-type: none;
+  ul {
+    display: flex;
+    gap: 1rem;
+    list-style-type: none;
+  }
 }
 
 form {
@@ -53,4 +52,15 @@ form {
 
 fieldset {
   width: fit-content;
+}
+
+.increment-wrapper {
+  display: none;
+  margin-block-start: 1rem;
+
+  label {
+    display: inline-block;
+    max-width: 40ch;
+    margin-inline-start: 0.5rem;
+  }
 }
