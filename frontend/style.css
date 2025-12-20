@@ -50,3 +50,7 @@ form {
 .active-form {
   display: block;
 }
+
+fieldset {
+  width: fit-content;
+}

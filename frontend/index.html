@@ -177,12 +177,21 @@
           />
         </div>
         <div class="form-group">
-          <label for="tapes-needs-repair">needs repair?</label>
-          <input
-            type="text"
-            name="needs_repair"
-            id="tapes-needs-repair"
-          />
+          <fieldset>
+            <legend>needs repair?</legend>
+            <label for="yes">yes</label>
+            <input
+              type="radio"
+              name="needsRepair"
+              id="yes"
+            />
+            <label for="no">no</label>
+            <input
+              type="radio"
+              name="needsRepair"
+              id="no"
+            />
+          </fieldset>
         </div>
         <div class="form-group">
           <label for="tapes-speed">tape speed</label>
