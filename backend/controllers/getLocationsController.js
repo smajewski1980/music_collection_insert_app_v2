@@ -2,6 +2,8 @@ import pool from "../database/db_connect.js";
 
 export default async function (req, res, next) {
   try {
+    // dammit, need to rename the view in db
+    // for production the view is current_tapes_location <-- no 's'
     const tapesResult = await pool.query(
       "SELECT * FROM current_tapes_locations",
     );
