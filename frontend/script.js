@@ -29,9 +29,31 @@ buttons.forEach((btn) => {
   btn.addEventListener("click", handleBtnClick);
 });
 
-function handleCdsMainForm(e) {
+async function handleCdsMainForm(e) {
   e.preventDefault();
-  console.log("submitting cds main form");
+  const formData = new FormData(cdsMainForm);
+
+  const data = {
+    artist: formData.get("artist"),
+    title: formData.get("title"),
+    location: formData.get("location"),
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  try {
+    const res = await fetch("/cds-main", options);
+    console.log("new item id: ", res.body);
+    cdsMainForm.reset();
+  } catch (error) {
+    console.log(error);
+  }
 }
 function handleCdCompsForm(e) {
   e.preventDefault();
