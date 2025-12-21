@@ -249,6 +249,17 @@ function getMostCurrentLoc(array, format) {
   }
 }
 
+const cdsMainSelect = document.getElementById("cds-main-location");
+
+function populateCdsMain(data) {
+  data.forEach((loc) => {
+    const option = document.createElement("option");
+    option.value = loc;
+    option.textContent = loc;
+    cdsMainSelect.appendChild(option);
+  });
+}
+
 function processLocations(data) {
   const tapesLocs = data.tapes;
   const recordsLocs = data.records;
@@ -260,6 +271,8 @@ function processLocations(data) {
   const currCdSinglesLocs = getMostCurrentLoc(cdSinglesLocs, "cdSingles");
   const currCdComps = getMostCurrentLoc(cdCompsLocs, "cdComps");
   const currCdsMain = getMostCurrentLoc(cdsLocs, "cds");
+
+  populateCdsMain(currCdsMain);
 
   // console.log("curr tapes", currTapeLoc); // <--these will be the final results to use for the ui
   // console.log("curr records", currRecordsLocs); // <--these will be the final results to use for the ui
