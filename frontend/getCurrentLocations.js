@@ -6,6 +6,7 @@ function customSort(a, b) {
   });
 }
 
+// for the cds main, this gets the locations, sorts them by category, then sorts those and returns the current location
 function getMostCurrentCdsMainLoc(array) {
   const misc = [];
   const classical = [];
@@ -64,6 +65,7 @@ function getMostCurrentCdsMainLoc(array) {
   ];
 }
 
+// for the cd comps, this gets the locations, sorts them by category, then sorts those and returns the current location
 function getMostCurrentCdComps(array) {
   // sort out by category
   const classical = [];
@@ -100,10 +102,10 @@ function getMostCurrentCdComps(array) {
   ];
 }
 
+// cd singles didnt need any modification other than just getting the vals into the return array
 function breakDownCdSinglesLocs(array) {
   singleLocs = [];
 
-  // these didnt need any modification other than just getting the vals into the return array
   array.forEach((loc) => {
     singleLocs.push(loc.case_type);
   });
@@ -111,6 +113,7 @@ function breakDownCdSinglesLocs(array) {
   return singleLocs;
 }
 
+// after the records are sorted by speed, this sorts the 33s by category, then sorts again, and returns the current location
 function getMostCurrentSubLoc(array) {
   const misc = [];
   const classical = [];
@@ -170,6 +173,7 @@ function getMostCurrentSubLoc(array) {
   ];
 }
 
+// for the records, this gets the locations, sorts them by speed, then sorts those and returns the current location
 function getMostCurrentRecordsLoc(array) {
   const rec45s = [];
   const rec33s = [];
@@ -201,6 +205,7 @@ function getMostCurrentRecordsLoc(array) {
   return [...curren33sLocs, current45sLoc, current78sLoc, ...misc];
 }
 
+// for the tapes, this gets the locations, sorts them by category, then sorts those and returns the current location
 function getMostCurrentTapeLoc(array) {
   const eightTracks = [];
   const reelToReel = [];
@@ -249,38 +254,48 @@ function getMostCurrentLoc(array, format) {
   }
 }
 
+// the HTML select elements
 const cdsMainSelect = document.getElementById("cds-main-location");
+const tapesSelect = document.getElementById("tapes-location");
+const recordsSelect = document.getElementById("records-location");
+const cdCompsSelect = document.getElementById("cd-comps-location");
+const cdSinglesSelect = document.getElementById("cd-singles-case-type");
 
-function populateCdsMain(data) {
+// create the option elements and put in the DOM
+function populateSelectList(data, select) {
   data.forEach((loc) => {
     const option = document.createElement("option");
     option.value = loc;
     option.textContent = loc;
-    cdsMainSelect.appendChild(option);
+    select.appendChild(option);
   });
 }
 
+// sort out the data from the fetch by type and give to the getMostCurrentLoc func
 function processLocations(data) {
+  // sort the data
   const tapesLocs = data.tapes;
   const recordsLocs = data.records;
   const cdsLocs = data.cds;
   const cdCompsLocs = data.cdComps;
   const cdSinglesLocs = data.cdSingles;
+
+  // get the most current locations
   const currTapeLoc = getMostCurrentLoc(tapesLocs, "tapes");
   const currRecordsLocs = getMostCurrentLoc(recordsLocs, "records");
   const currCdSinglesLocs = getMostCurrentLoc(cdSinglesLocs, "cdSingles");
   const currCdComps = getMostCurrentLoc(cdCompsLocs, "cdComps");
   const currCdsMain = getMostCurrentLoc(cdsLocs, "cds");
 
-  populateCdsMain(currCdsMain);
-
-  // console.log("curr tapes", currTapeLoc); // <--these will be the final results to use for the ui
-  // console.log("curr records", currRecordsLocs); // <--these will be the final results to use for the ui
-  // console.log("curr cd singles", currCdSinglesLocs); // <--these will be the final results to use for the ui
-  // console.log("curr cd comps", currCdComps); // <--these will be the final results to use for the ui
-  // console.log("curr cds main", currCdsMain); // <--these will be the final results to use for the ui
+  // populate the location select lists in the UI forms
+  populateSelectList(currCdsMain, cdsMainSelect);
+  populateSelectList(currTapeLoc, tapesSelect);
+  populateSelectList(currRecordsLocs, recordsSelect);
+  populateSelectList(currCdComps, cdCompsSelect);
+  populateSelectList(currCdSinglesLocs, cdSinglesSelect);
 }
 
+// fetch the data
 async function getLocations() {
   try {
     const res = await fetch("/locations");
