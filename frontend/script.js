@@ -59,8 +59,39 @@ function handleCdCompsForm(e) {
   e.preventDefault();
   console.log("submitting cd comps form");
 }
-function handleRecordsForm(e) {
+
+async function handleRecordsForm(e) {
   e.preventDefault();
+  const formData = new FormData(recordsForm);
+
+  const data = {
+    artist: formData.get("artist"),
+    title: formData.get("title"),
+    location: formData.get("location"),
+    year: Number(formData.get("year")),
+    diameter: formData.get("diameter"),
+    sleeve_condition: formData.get("sleeveCondition"),
+    record_condition: formData.get("recordCondition"),
+    label: formData.get("label"),
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  try {
+    const res = await fetch("/records", options);
+    const resData = await res.json();
+    recordsForm.reset();
+    console.log("new item id: ", resData);
+  } catch (error) {
+    console.log(error);
+  }
+
   console.log("submitting records form");
 }
 
