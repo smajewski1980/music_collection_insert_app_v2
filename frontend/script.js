@@ -49,8 +49,8 @@ async function handleCdsMainForm(e) {
 
   try {
     const res = await fetch("/cds-main", options);
-    console.log("new item id: ", res.body);
     cdsMainForm.reset();
+    console.log("new item id: ", res.body);
   } catch (error) {
     console.log(error);
   }
@@ -63,10 +63,38 @@ function handleRecordsForm(e) {
   e.preventDefault();
   console.log("submitting records form");
 }
-function handleTapesForm(e) {
+
+async function handleTapesForm(e) {
   e.preventDefault();
-  console.log("submitting tapes form");
+  const formData = new FormData(tapesForm);
+
+  const data = {
+    artist: formData.get("artist"),
+    title: formData.get("title"),
+    location: formData.get("location"),
+    year: Number(formData.get("year")),
+    needsRepair: formData.get("needsRepair"),
+    speed: formData.get("tapeSpeed"),
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  try {
+    const res = await fetch("/tapes", options);
+    const data = await res.json();
+    tapesForm.reset();
+    console.log("new item id: ", data);
+  } catch (error) {
+    console.log(error);
+  }
 }
+
 function handleCdSinglesForm(e) {
   e.preventDefault();
   console.log("submitting cd singles form");

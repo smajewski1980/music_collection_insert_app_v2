@@ -12,10 +12,10 @@ function validateNeedsRepair(val) {
 }
 
 function validateSpeed(val) {
-  if (val === "3 3/4" || val === "7 1/4" || val === "na") {
+  if (val === "3 3/4 ips" || val === "7 1/4 ips" || val === "na") {
     return true;
   }
-  throw new Error("speed can only be 3 3/4, 7 1/4 or na");
+  throw new Error("speed can only be 3 3/4 ips, 7 1/4 ips or na");
 }
 
 router.post(
