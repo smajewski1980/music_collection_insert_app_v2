@@ -55,9 +55,45 @@ async function handleCdsMainForm(e) {
     console.log(error);
   }
 }
-function handleCdCompsForm(e) {
+
+async function handleCdCompsForm(e) {
   e.preventDefault();
-  console.log("submitting cd comps form");
+  const formData = new FormData(cdCompsForm);
+
+  const tracksFull = formData.get("tracks").trim().split("\n");
+  const tracksToSend = [];
+  tracksFull.forEach((tr) => {
+    const track = tr.split("|");
+    tracksToSend.push(track);
+  });
+
+  const data = {
+    title: formData.get("title"),
+    year: Number(formData.get("year")),
+    location: formData.get("location"),
+    tracks: tracksToSend,
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  try {
+    const res = await fetch("/cd-comps", options);
+    const resData = await res.json();
+    const id = resData.titleId;
+    if (id == undefined) {
+      throw new Error("oh oh...");
+    }
+    cdCompsForm.reset();
+    return console.log("new item id: ", id);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function handleRecordsForm(e) {
