@@ -12,19 +12,26 @@ const buttons = [btnComps, btnSingles, btnMain, btnRecords, btnTapes];
 const forms = [cdCompsForm, cdSinglesForm, cdsMainForm, recordsForm, tapesForm];
 const incrementWrapper = document.querySelector(".increment-wrapper");
 
+// reset all forms to not active
 function removeActiveFormClass() {
   forms.forEach((form) => {
     form.classList.remove("active-form");
   });
 }
 
+// when a nav button is clicked, show the appropriate form
 function handleBtnClick(e) {
+  // reset the forms to not active
   removeActiveFormClass();
+  // which form to load
   const clicked = e.target.dataset.form;
+  // show it
   document.getElementById(clicked).classList.add("active-form");
+  // on the initial load, display the increment location option
   incrementWrapper.style.display = "block";
 }
 
+// add the listeners to the nav btns
 buttons.forEach((btn) => {
   btn.addEventListener("click", handleBtnClick);
 });
@@ -162,11 +169,42 @@ async function handleTapesForm(e) {
   }
 }
 
-function handleCdSinglesForm(e) {
+async function handleCdSinglesForm(e) {
   e.preventDefault();
-  console.log("submitting cd singles form");
+  const formData = new FormData(cdSinglesForm);
+
+  const trackList = formData.get("tracks").trim().split("\n");
+
+  const data = {
+    artist: formData.get("artist"),
+    title: formData.get("title"),
+    year: Number(formData.get("year")),
+    caseType: formData.get("caseType"),
+    tracks: trackList,
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  try {
+    const res = await fetch("/cd-singles", options);
+    if (res.status !== 201) {
+      throw new Error("oh oh...");
+    }
+    const id = await res.json();
+    cdSinglesForm.reset();
+    console.log("new item id: ", id);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
+// submit listeners on the forms
 cdsMainForm.addEventListener("submit", handleCdsMainForm);
 cdCompsForm.addEventListener("submit", handleCdCompsForm);
 cdSinglesForm.addEventListener("submit", handleCdSinglesForm);
