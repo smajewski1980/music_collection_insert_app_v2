@@ -103,6 +103,16 @@ async function handleCdCompsForm(e) {
   }
 }
 
+// generic func to check the data objects for empty fields
+function noEmptyFields(data) {
+  for (const key in data) {
+    if (!data[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 async function handleRecordsForm(e) {
   e.preventDefault();
   const formData = new FormData(recordsForm);
@@ -126,16 +136,22 @@ async function handleRecordsForm(e) {
     body: JSON.stringify(data),
   };
 
-  try {
-    const res = await fetch("/records", options);
-    const resData = await res.json();
-    recordsForm.reset();
-    console.log("new item id: ", resData);
-  } catch (error) {
-    console.log(error);
+  if (!noEmptyFields(data)) {
+    alert("Bitch, fill all them fields out!");
   }
 
-  console.log("submitting records form");
+  if (noEmptyFields(data)) {
+    try {
+      const res = await fetch("/records", options);
+      const resData = await res.json();
+      recordsForm.reset();
+      console.log("new item id: ", resData);
+    } catch (error) {
+      console.log(error);
+    }
+
+    console.log("submitting records form");
+  }
 }
 
 async function handleTapesForm(e) {
