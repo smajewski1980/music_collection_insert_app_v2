@@ -67,11 +67,27 @@ async function handleCdCompsForm(e) {
   e.preventDefault();
   const formData = new FormData(cdCompsForm);
 
+  // convert track data from a long string to nested arrays
+  // the whole string
   const tracksFull = formData.get("tracks").trim().split("\n");
-  const tracksToSend = [];
+  // initialize to undefined to later test easier for empty tracks field
+  let tracksToSend = undefined;
+
+  // loop through and break down each track to array of artist and title
   tracksFull.forEach((tr) => {
+    // i use the pipe to split on
     const track = tr.split("|");
-    tracksToSend.push(track);
+    // a good track will have a length of 2
+    if (track.length === 2) {
+      // if still undefined, create an empty array
+      if (!tracksToSend) {
+        tracksToSend = [];
+      }
+      // cleanup and push
+      track[0] = track[0].trim();
+      track[1] = track[1].trim();
+      tracksToSend.push(track);
+    }
   });
 
   const data = {
@@ -89,22 +105,33 @@ async function handleCdCompsForm(e) {
     body: JSON.stringify(data),
   };
 
-  try {
-    const res = await fetch("/cd-comps", options);
-    const resData = await res.json();
-    const id = resData.titleId;
-    if (id == undefined) {
-      throw new Error("oh oh...");
+  if (!noEmptyFields(data)) {
+    // at some point, make custom alerts
+    alert("All fields must be filled out.");
+  }
+
+  if (noEmptyFields(data)) {
+    try {
+      const res = await fetch("/cd-comps", options);
+      const resData = await res.json();
+      const id = resData.titleId;
+      if (id == undefined) {
+        throw new Error("oh oh...");
+      }
+      cdCompsForm.reset();
+      return console.log("new item id: ", id);
+    } catch (error) {
+      console.log(error);
     }
-    cdCompsForm.reset();
-    return console.log("new item id: ", id);
-  } catch (error) {
-    console.log(error);
   }
 }
 
 // generic func to check the data objects for empty fields
 function noEmptyFields(data) {
+  if (!data.tracks) {
+    return false;
+  }
+
   for (const key in data) {
     if (!data[key]) {
       return false;
@@ -137,7 +164,8 @@ async function handleRecordsForm(e) {
   };
 
   if (!noEmptyFields(data)) {
-    alert("Bitch, fill all them fields out!");
+    // at some point, make custom alerts
+    alert("All fields must be filled out.");
   }
 
   if (noEmptyFields(data)) {
