@@ -118,10 +118,12 @@ async function handleCdCompsForm(e) {
 
   if (!noEmptyFields(data)) {
     toasty("All fields must be filled out.", "red");
+    return;
   }
 
   if (!yearFormatIsGood(data.year)) {
     toasty("Year must be 4 digits.", "red");
+    return;
   }
 
   if (noEmptyFields(data)) {
@@ -133,7 +135,11 @@ async function handleCdCompsForm(e) {
       // if no id, print the backend validation errors
       if (id == undefined) {
         for (let i = 0; i < resData.length; i++) {
-          console.log(resData[i]); // <-- still need to get errs formated to toast
+          toasty(
+            `Value: ${resData[i].value}; Message: ${resData[i].msg}`,
+            "red",
+          );
+          console.log(resData[i]);
         }
         return;
       }
