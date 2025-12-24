@@ -125,7 +125,10 @@ async function handleCdCompsForm(e) {
       const resData = await res.json();
       const id = resData.titleId;
       if (id == undefined) {
-        throw new Error("oh oh...");
+        for (let i = 0; i < resData.length; i++) {
+          console.log(resData[i]);
+        }
+        return;
       }
       cdCompsForm.reset();
       return console.log("new item id: ", id);
