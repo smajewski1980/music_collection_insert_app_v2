@@ -1,4 +1,9 @@
-import Toastify from "./node_modules/toastify-js/src/toastify-es.js";
+import {
+  removeActiveFormClass,
+  yearFormatIsGood,
+  noEmptyFields,
+  toasty,
+} from "./utils.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
 const cdSinglesForm = document.getElementById("cd-singles-form");
 const cdsMainForm = document.getElementById("cd-main-form");
@@ -13,63 +18,12 @@ const buttons = [btnComps, btnSingles, btnMain, btnRecords, btnTapes];
 const forms = [cdCompsForm, cdSinglesForm, cdsMainForm, recordsForm, tapesForm];
 const incrementWrapper = document.querySelector(".increment-wrapper");
 
-// reset all forms to not active
-function removeActiveFormClass() {
-  forms.forEach((form) => {
-    form.classList.remove("active-form");
-  });
-}
-
-// frontend validation for the year field, did this way to use toastify instead of user-agent message
-function yearFormatIsGood(year) {
-  const regex = /^[0-9]{4}$/;
-  return regex.test(year);
-}
-
-// check the data objects for empty vals
-function noEmptyFields(data) {
-  if (!data.tracks) {
-    return false;
-  }
-
-  for (const key in data) {
-    if (!data[key]) {
-      return false;
-    }
-  }
-  return true;
-}
-
-// our toast config function
-function toasty(msg, color) {
-  let bg;
-
-  if (color === "red") {
-    bg = "rgb(182, 97, 97)";
-  }
-  if (color === "green") {
-    bg = "rgb(98, 148, 98)";
-  }
-  if (!bg) {
-    bg = color;
-  }
-
-  Toastify({
-    text: msg,
-    duration: 5000,
-    gravity: "bottom",
-    style: {
-      background: bg,
-    },
-  }).showToast();
-}
-
 // when a nav button is clicked, show the appropriate form
 function handleNavBtnClick(e) {
   if (document.startViewTransition) {
     document.startViewTransition(() => {
       // reset the forms to not active
-      removeActiveFormClass();
+      removeActiveFormClass(forms);
       // which form to load
       const clicked = e.target.dataset.form;
       // show it
@@ -78,7 +32,7 @@ function handleNavBtnClick(e) {
       incrementWrapper.style.display = "block";
     });
   } else {
-    removeActiveFormClass();
+    removeActiveFormClass(forms);
     const clicked = e.target.dataset.form;
     document.getElementById(clicked).classList.add("active-form");
     incrementWrapper.style.display = "block";
