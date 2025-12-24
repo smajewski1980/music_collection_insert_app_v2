@@ -52,3 +52,10 @@ export function toasty(msg, color) {
     },
   }).showToast();
 }
+
+// trim singles track titles
+export function trimTracks(arr) {
+  const trimmed = [];
+  arr.forEach((tr) => trimmed.push(tr.trim()));
+  return trimmed;
+}

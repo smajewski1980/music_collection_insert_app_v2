@@ -3,6 +3,7 @@ import {
   yearFormatIsGood,
   noEmptyFields,
   toasty,
+  trimTracks,
 } from "./utils.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
 const cdSinglesForm = document.getElementById("cd-singles-form");
@@ -231,8 +232,9 @@ async function handleTapesForm(e) {
 
 async function handleCdSinglesForm(e) {
   e.preventDefault();
+  // get the form data
   const formData = new FormData(cdSinglesForm);
-
+  // break down the tracks string to an array, each track gets trimmed later
   const trackList = formData.get("tracks").trim().split("\n");
 
   const data = {
@@ -240,8 +242,24 @@ async function handleCdSinglesForm(e) {
     title: formData.get("title"),
     year: Number(formData.get("year")),
     caseType: formData.get("caseType"),
-    tracks: trackList,
+    tracks: trimTracks(trackList),
   };
+
+  if (!noEmptyFields(data)) {
+    toasty("All fields must be filled out.", "red");
+    return;
+  }
+
+  if (!yearFormatIsGood(data.year)) {
+    toasty("Year must be 4 digits", "red");
+    return;
+  }
+
+  // if only the tracks are empty
+  if (!trackList[0] && noEmptyFields(data)) {
+    toasty("Please add some tracks.", "red");
+    return;
+  }
 
   const options = {
     method: "POST",
@@ -251,16 +269,30 @@ async function handleCdSinglesForm(e) {
     body: JSON.stringify(data),
   };
 
-  try {
-    const res = await fetch("/cd-singles", options);
-    if (res.status !== 201) {
-      throw new Error("oh oh...");
+  if (noEmptyFields(data)) {
+    try {
+      const res = await fetch("/cd-singles", options);
+      // toast a regular server error
+      if (res.status === 500)
+        return toasty("Something went wrong, try again.", "red");
+      // if not server error, must be validation errors, make some more toast.
+      if (res.status !== 201) {
+        const data = await res.json();
+        toasty(`Value: ${data[0].value} Message: ${data[0].msg}`, "red");
+        console.log(data[0].value, data[0].msg);
+        return;
+      }
+      const id = await res.json();
+      cdSinglesForm.reset();
+      toasty(
+        `${data.artist} - ${data.title} was added to the database with id: ${id}`,
+        "green",
+      );
+      console.log("new item id: ", id);
+    } catch (error) {
+      toasty(error, "red");
+      console.log(error);
     }
-    const id = await res.json();
-    cdSinglesForm.reset();
-    console.log("new item id: ", id);
-  } catch (error) {
-    console.log(error);
   }
 }
 
