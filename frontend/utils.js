@@ -16,8 +16,8 @@ export function yearFormatIsGood(year) {
 }
 
 // check the data objects for empty vals
-export function noEmptyFields(data) {
-  if (!data.tracks) {
+export function noEmptyFields(data, tracksTrigger) {
+  if (tracksTrigger && !data.tracks) {
     return false;
   }
 

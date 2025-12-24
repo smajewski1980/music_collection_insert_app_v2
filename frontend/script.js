@@ -55,6 +55,11 @@ async function handleCdsMainForm(e) {
     location: formData.get("location"),
   };
 
+  if (!noEmptyFields(data, false)) {
+    toasty("All fields must be filled out.", "red");
+    return;
+  }
+
   const options = {
     method: "POST",
     headers: {
@@ -65,9 +70,24 @@ async function handleCdsMainForm(e) {
 
   try {
     const res = await fetch("/cds-main", options);
+    if (res.status === 400) {
+      const errs = await res.json();
+      errs.forEach((er) => {
+        console.log(er);
+        toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
+        console.log(`Value: ${er.value} ; Message: ${er.msg}`);
+      });
+      return;
+    }
+    const resData = await res.json();
     cdsMainForm.reset();
-    console.log("new item id: ", res.body);
+    toasty(
+      `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
+      "green",
+    );
+    console.log("new item id: ", resData);
   } catch (error) {
+    toasty(error, "red");
     console.log(error);
   }
 }
@@ -117,7 +137,7 @@ async function handleCdCompsForm(e) {
     body: JSON.stringify(data),
   };
 
-  if (!noEmptyFields(data)) {
+  if (!noEmptyFields(data, true)) {
     toasty("All fields must be filled out.", "red");
     return;
   }
@@ -127,7 +147,7 @@ async function handleCdCompsForm(e) {
     return;
   }
 
-  if (noEmptyFields(data)) {
+  if (noEmptyFields(data, true)) {
     try {
       const res = await fetch("/cd-comps", options);
       const resData = await res.json();
@@ -245,7 +265,7 @@ async function handleCdSinglesForm(e) {
     tracks: trimTracks(trackList),
   };
 
-  if (!noEmptyFields(data)) {
+  if (!noEmptyFields(data, true)) {
     toasty("All fields must be filled out.", "red");
     return;
   }
@@ -256,7 +276,7 @@ async function handleCdSinglesForm(e) {
   }
 
   // if only the tracks are empty
-  if (!trackList[0] && noEmptyFields(data)) {
+  if (!trackList[0] && noEmptyFields(data, true)) {
     toasty("Please add some tracks.", "red");
     return;
   }
@@ -269,7 +289,7 @@ async function handleCdSinglesForm(e) {
     body: JSON.stringify(data),
   };
 
-  if (noEmptyFields(data)) {
+  if (noEmptyFields(data, true)) {
     try {
       const res = await fetch("/cd-singles", options);
       // toast a regular server error
