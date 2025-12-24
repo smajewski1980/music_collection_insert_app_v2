@@ -22,6 +22,8 @@
   text-decoration: none;
   /* i set this width as a clamp */
   max-width: clamp(21.875rem, calc(14.897rem + 29.773vw), 50.625rem);
+  right: 1rem;
+
   z-index: 2147483647;
 }
 

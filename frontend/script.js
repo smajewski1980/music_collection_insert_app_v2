@@ -20,8 +20,52 @@ function removeActiveFormClass() {
   });
 }
 
+// frontend validation for the year field, did this way to use toastify instead of user-agent message
+function yearFormatIsGood(year) {
+  const regex = /^[0-9]{4}$/;
+  return regex.test(year);
+}
+
+// check the data objects for empty vals
+function noEmptyFields(data) {
+  if (!data.tracks) {
+    return false;
+  }
+
+  for (const key in data) {
+    if (!data[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// our toast config function
+function toasty(msg, color) {
+  let bg;
+
+  if (color === "red") {
+    bg = "rgb(182, 97, 97)";
+  }
+  if (color === "green") {
+    bg = "rgb(98, 148, 98)";
+  }
+  if (!bg) {
+    bg = color;
+  }
+
+  Toastify({
+    text: msg,
+    duration: 5000,
+    gravity: "bottom",
+    style: {
+      background: bg,
+    },
+  }).showToast();
+}
+
 // when a nav button is clicked, show the appropriate form
-function handleBtnClick(e) {
+function handleNavBtnClick(e) {
   if (document.startViewTransition) {
     document.startViewTransition(() => {
       // reset the forms to not active
@@ -43,7 +87,7 @@ function handleBtnClick(e) {
 
 // add the listeners to the nav btns
 buttons.forEach((btn) => {
-  btn.addEventListener("click", handleBtnClick);
+  btn.addEventListener("click", handleNavBtnClick);
 });
 
 async function handleCdsMainForm(e) {
@@ -98,13 +142,7 @@ async function handleCdCompsForm(e) {
       track[1] = track[1].trim();
       tracksToSend.push(track);
     } else {
-      Toastify({
-        text: "Check your track data. Must be <artist>|<title>.",
-        duration: 3000,
-        style: {
-          background: "rgb(182, 97, 97)",
-        },
-      }).showToast();
+      toasty("Check your track data. Must be <artist>|<title>.", "red");
       return;
     }
   });
@@ -125,15 +163,11 @@ async function handleCdCompsForm(e) {
   };
 
   if (!noEmptyFields(data)) {
-    // at some point, make custom alerts
-    // alert("All fields must be filled out.");
-    Toastify({
-      text: "All fields must be filled out.",
-      duration: 3000,
-      style: {
-        background: "rgb(182, 97, 97)",
-      },
-    }).showToast();
+    toasty("All fields must be filled out.", "red");
+  }
+
+  if (!yearFormatIsGood(data.year)) {
+    toasty("Year must be 4 digits.", "red");
   }
 
   if (noEmptyFields(data)) {
@@ -145,37 +179,21 @@ async function handleCdCompsForm(e) {
       // if no id, print the backend validation errors
       if (id == undefined) {
         for (let i = 0; i < resData.length; i++) {
-          console.log(resData[i]);
+          console.log(resData[i]); // <-- still need to get errs formated to toast
         }
         return;
       }
       cdCompsForm.reset();
-      Toastify({
-        text: `${data.title} has been added to the database with id ${id}.`,
-        duration: 5000,
-        style: {
-          background: "rgb(98, 148, 98)",
-        },
-      }).showToast();
+      toasty(
+        `${data.title} has been added to the database with id ${id}.`,
+        "green",
+      );
       return console.log("new item id: ", id);
     } catch (error) {
+      toasty(error, "red");
       console.log(error);
     }
   }
-}
-
-// generic func to check the data objects for empty fields
-function noEmptyFields(data) {
-  if (!data.tracks) {
-    return false;
-  }
-
-  for (const key in data) {
-    if (!data[key]) {
-      return false;
-    }
-  }
-  return true;
 }
 
 async function handleRecordsForm(e) {
