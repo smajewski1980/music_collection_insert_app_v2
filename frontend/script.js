@@ -1,3 +1,4 @@
+import Toastify from "./node_modules/toastify-js/src/toastify-es.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
 const cdSinglesForm = document.getElementById("cd-singles-form");
 const cdsMainForm = document.getElementById("cd-main-form");
@@ -96,6 +97,15 @@ async function handleCdCompsForm(e) {
       track[0] = track[0].trim();
       track[1] = track[1].trim();
       tracksToSend.push(track);
+    } else {
+      Toastify({
+        text: "Check your track data. Must be <artist>|<title>.",
+        duration: 3000,
+        style: {
+          background: "rgb(182, 97, 97)",
+        },
+      }).showToast();
+      return;
     }
   });
 
@@ -116,7 +126,14 @@ async function handleCdCompsForm(e) {
 
   if (!noEmptyFields(data)) {
     // at some point, make custom alerts
-    alert("All fields must be filled out.");
+    // alert("All fields must be filled out.");
+    Toastify({
+      text: "All fields must be filled out.",
+      duration: 3000,
+      style: {
+        background: "rgb(182, 97, 97)",
+      },
+    }).showToast();
   }
 
   if (noEmptyFields(data)) {
@@ -124,6 +141,8 @@ async function handleCdCompsForm(e) {
       const res = await fetch("/cd-comps", options);
       const resData = await res.json();
       const id = resData.titleId;
+
+      // if no id, print the backend validation errors
       if (id == undefined) {
         for (let i = 0; i < resData.length; i++) {
           console.log(resData[i]);
@@ -131,6 +150,13 @@ async function handleCdCompsForm(e) {
         return;
       }
       cdCompsForm.reset();
+      Toastify({
+        text: `${data.title} has been added to the database with id ${id}.`,
+        duration: 5000,
+        style: {
+          background: "rgb(98, 148, 98)",
+        },
+      }).showToast();
       return console.log("new item id: ", id);
     } catch (error) {
       console.log(error);
