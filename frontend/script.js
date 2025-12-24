@@ -21,14 +21,23 @@ function removeActiveFormClass() {
 
 // when a nav button is clicked, show the appropriate form
 function handleBtnClick(e) {
-  // reset the forms to not active
-  removeActiveFormClass();
-  // which form to load
-  const clicked = e.target.dataset.form;
-  // show it
-  document.getElementById(clicked).classList.add("active-form");
-  // on the initial load, display the increment location option
-  incrementWrapper.style.display = "block";
+  if (document.startViewTransition) {
+    document.startViewTransition(() => {
+      // reset the forms to not active
+      removeActiveFormClass();
+      // which form to load
+      const clicked = e.target.dataset.form;
+      // show it
+      document.getElementById(clicked).classList.add("active-form");
+      // on the initial load, display the increment location option
+      incrementWrapper.style.display = "block";
+    });
+  } else {
+    removeActiveFormClass();
+    const clicked = e.target.dataset.form;
+    document.getElementById(clicked).classList.add("active-form");
+    incrementWrapper.style.display = "block";
+  }
 }
 
 // add the listeners to the nav btns
@@ -67,7 +76,7 @@ async function handleCdCompsForm(e) {
   e.preventDefault();
   const formData = new FormData(cdCompsForm);
 
-  // convert track data from a long string to nested arrays
+  // ----- convert track data from a long string to nested arrays
   // the whole string
   const tracksFull = formData.get("tracks").trim().split("\n");
   // initialize to undefined to later test easier for empty tracks field
