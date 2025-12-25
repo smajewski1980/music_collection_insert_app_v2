@@ -6,6 +6,7 @@ import {
   trimTracks,
   handleIncrementLocation,
 } from "./utils.js";
+import { getLocations } from "./getCurrentLocations.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
 const cdSinglesForm = document.getElementById("cd-singles-form");
 const cdsMainForm = document.getElementById("cd-main-form");
@@ -101,12 +102,19 @@ async function handleCdsMainForm(e) {
       return;
     }
     const resData = await res.json();
-    cdsMainForm.reset();
     toasty(
       `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
       "green",
     );
+
+    cdsMainForm.reset();
+
     console.log("new item id: ", resData);
+
+    if (incrementLocationSwitch()) {
+      await getLocations();
+      handleIncrementReset();
+    }
   } catch (error) {
     toasty(error, "red");
     console.log(error);
@@ -190,7 +198,11 @@ async function handleCdCompsForm(e) {
         `${data.title} has been added to the database with id ${id}.`,
         "green",
       );
-      return console.log("new item id: ", id);
+      if (incrementLocationSwitch()) {
+        await getLocations();
+        handleIncrementReset();
+      }
+      console.log("new item id: ", id);
     } catch (error) {
       toasty(error, "red");
       console.log(error);
@@ -250,6 +262,10 @@ async function handleRecordsForm(e) {
         "green",
       );
       console.log("new item id: ", resData);
+      if (incrementLocationSwitch()) {
+        await getLocations();
+        handleIncrementReset();
+      }
     } catch (error) {
       toasty(error, "red");
       console.log(error);
@@ -283,6 +299,10 @@ async function handleTapesForm(e) {
     const data = await res.json();
     tapesForm.reset();
     console.log("new item id: ", data);
+    if (incrementLocationSwitch()) {
+      await getLocations();
+      handleIncrementReset();
+    }
   } catch (error) {
     console.log(error);
   }

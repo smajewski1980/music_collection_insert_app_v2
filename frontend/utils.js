@@ -66,12 +66,29 @@ export function trimTracks(arr) {
   return trimmed;
 }
 
+// ****still need to undo the increment if option changes before submit *******
 export function handleIncrementLocation(form) {
   // now we take this form and change the select options value and text content
   console.log("selected form id", form.id);
-  console.log(
-    "the selected options value",
-    Array.from(form.querySelectorAll("option")).filter((opt) => opt.selected)[0]
-      .value,
-  );
+  const selectedOption = Array.from(form.querySelectorAll("option")).filter(
+    (opt) => opt.selected,
+  )[0];
+  // take option value and split
+  const splitOptionVal = selectedOption.value.split(" ");
+
+  // take the -1 index and parse as num
+  let numVal = parseInt(splitOptionVal.at(-1));
+  // if one of the options without an ending number is selected, return
+  if (Number.isNaN(numVal)) return;
+  // increment num and add back to string
+  const incrementedNumString = (numVal += 1).toString();
+  splitOptionVal[splitOptionVal.length - 1] = incrementedNumString;
+  const reassembledString = splitOptionVal.join(" ");
+
+  // set the new vals
+
+  selectedOption.value = reassembledString;
+  selectedOption.textContent = reassembledString;
+  console.log("the selected options value", selectedOption.value);
+  console.log("the selected options text", selectedOption.textContent);
 }

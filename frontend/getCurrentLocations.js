@@ -104,7 +104,7 @@ function getMostCurrentCdComps(array) {
 
 // cd singles didnt need any modification other than just getting the vals into the return array
 function breakDownCdSinglesLocs(array) {
-  singleLocs = [];
+  const singleLocs = [];
 
   array.forEach((loc) => {
     singleLocs.push(loc.case_type);
@@ -127,7 +127,7 @@ function getMostCurrentSubLoc(array) {
 
   // sort out by category
   array.forEach((loc) => {
-    currLoc = loc.split(" ")[1];
+    const currLoc = loc.split(" ")[1];
     if (currLoc === "Classical") {
       classical.push(loc);
     } else if (currLoc === "Country") {
@@ -263,6 +263,7 @@ const cdSinglesSelect = document.getElementById("cd-singles-case-type");
 
 // create the option elements and put in the DOM
 function populateSelectList(data, select) {
+  select.innerHTML = '<option value=""></option>';
   data.forEach((loc) => {
     const option = document.createElement("option");
     option.value = loc;
@@ -296,7 +297,7 @@ function processLocations(data) {
 }
 
 // fetch the data
-async function getLocations() {
+export async function getLocations() {
   try {
     const res = await fetch("/locations");
     const data = await res.json();
