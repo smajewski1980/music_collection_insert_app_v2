@@ -37,7 +37,8 @@ export default async function postRecordsController(req, res, next) {
     }
   }
 
-  const err = new Error(valRes.errors);
+  const err = new Error();
+  err.message = valRes.errors;
   err.status = 400;
   return next(err);
 }

@@ -21,11 +21,17 @@ export function noEmptyFields(data, tracksTrigger) {
     return false;
   }
 
+  if ("year" in data && Number.isNaN(data.year)) {
+    toasty("Year must be a number.", "red");
+    return;
+  }
+
   for (const key in data) {
     if (!data[key]) {
       return false;
     }
   }
+
   return true;
 }
 

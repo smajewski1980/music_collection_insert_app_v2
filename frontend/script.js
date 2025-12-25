@@ -73,7 +73,6 @@ async function handleCdsMainForm(e) {
     if (res.status === 400) {
       const errs = await res.json();
       errs.forEach((er) => {
-        console.log(er);
         toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
         console.log(`Value: ${er.value} ; Message: ${er.msg}`);
       });
@@ -192,6 +191,17 @@ async function handleRecordsForm(e) {
     label: formData.get("label"),
   };
 
+  if (!noEmptyFields(data, false)) {
+    toasty("All fields must be filled out.", "red");
+    console.log("All fields must be filled out.");
+    return;
+  }
+
+  if (!yearFormatIsGood(data.year)) {
+    toasty("Year must be 4 digits", "red");
+    return;
+  }
+
   const options = {
     method: "POST",
     headers: {
@@ -200,22 +210,28 @@ async function handleRecordsForm(e) {
     body: JSON.stringify(data),
   };
 
-  if (!noEmptyFields(data)) {
-    // at some point, make custom alerts
-    alert("All fields must be filled out.");
-  }
-
-  if (noEmptyFields(data)) {
+  if (noEmptyFields(data, false)) {
     try {
       const res = await fetch("/records", options);
+      if (res.status === 400) {
+        const errs = await res.json();
+        errs.forEach((er) => {
+          toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
+          console.log(`Value: ${er.value} ; Message: ${er.msg}`);
+        });
+        return;
+      }
       const resData = await res.json();
       recordsForm.reset();
+      toasty(
+        `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
+        "green",
+      );
       console.log("new item id: ", resData);
     } catch (error) {
+      toasty(error, "red");
       console.log(error);
     }
-
-    console.log("submitting records form");
   }
 }
 
