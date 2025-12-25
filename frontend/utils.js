@@ -65,3 +65,13 @@ export function trimTracks(arr) {
   arr.forEach((tr) => trimmed.push(tr.trim()));
   return trimmed;
 }
+
+export function handleIncrementLocation(form) {
+  // now we take this form and change the select options value and text content
+  console.log("selected form id", form.id);
+  console.log(
+    "the selected options value",
+    Array.from(form.querySelectorAll("option")).filter((opt) => opt.selected)[0]
+      .value,
+  );
+}
