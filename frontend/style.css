@@ -58,9 +58,17 @@ fieldset {
   display: none;
   margin-block-start: 1rem;
 
+  .increment-inner-wrapper {
+    width: fit-content;
+    outline: 1px solid white;
+    padding: 0.25rem;
+  }
+
   label {
     display: inline-block;
-    max-width: 40ch;
     margin-inline-start: 0.5rem;
+  }
+  p {
+    max-width: 40ch;
   }
 }

@@ -4,7 +4,10 @@ import {
   noEmptyFields,
   toasty,
   trimTracks,
-  handleIncrementLocation,
+  handleIncrementReset,
+  incrementCheckbox,
+  handleCheckbox,
+  incrementLocationSwitch,
 } from "./utils.js";
 import { getLocations } from "./getCurrentLocations.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
@@ -20,27 +23,6 @@ const btnTapes = document.querySelector(".btn-tapes");
 const buttons = [btnComps, btnSingles, btnMain, btnRecords, btnTapes];
 const forms = [cdCompsForm, cdSinglesForm, cdsMainForm, recordsForm, tapesForm];
 const incrementWrapper = document.querySelector(".increment-wrapper");
-const incrementCheckbox = document.getElementById("increment-location");
-const incrementLocationSwitch = () => incrementCheckbox.checked;
-
-// if the increment checkbox is checked and then the location is changed
-const selects = document.querySelectorAll("select");
-selects.forEach((sel) => {
-  sel.addEventListener("change", handleIncrementReset);
-});
-function handleIncrementReset() {
-  incrementCheckbox.checked = false;
-}
-
-// when the incr box is checked, get the active form
-function handleCheckbox() {
-  const activeForm = forms.filter((form) =>
-    form.classList.contains("active-form"),
-  );
-  if (incrementLocationSwitch()) {
-    handleIncrementLocation(activeForm[0]);
-  }
-}
 
 // when a nav button is clicked, show the appropriate form
 function handleNavBtnClick(e) {
@@ -62,11 +44,6 @@ function handleNavBtnClick(e) {
     incrementWrapper.style.display = "block";
   }
 }
-
-// add the listeners to the nav btns
-buttons.forEach((btn) => {
-  btn.addEventListener("click", handleNavBtnClick);
-});
 
 async function handleCdsMainForm(e) {
   e.preventDefault();
@@ -374,10 +351,23 @@ async function handleCdSinglesForm(e) {
   }
 }
 
+// add the listeners to the nav btns
+buttons.forEach((btn) => {
+  btn.addEventListener("click", handleNavBtnClick);
+});
+
+// if the increment checkbox is checked and then the location is changed
+const selects = document.querySelectorAll("select");
+selects.forEach((sel) => {
+  sel.addEventListener("change", handleIncrementReset);
+});
+
 // submit listeners on the forms
 cdsMainForm.addEventListener("submit", handleCdsMainForm);
 cdCompsForm.addEventListener("submit", handleCdCompsForm);
 cdSinglesForm.addEventListener("submit", handleCdSinglesForm);
 recordsForm.addEventListener("submit", handleRecordsForm);
 tapesForm.addEventListener("submit", handleTapesForm);
-incrementCheckbox.addEventListener("change", handleCheckbox);
+incrementCheckbox.addEventListener("change", () => {
+  handleCheckbox(forms);
+});

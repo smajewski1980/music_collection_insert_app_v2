@@ -69,7 +69,6 @@ export function trimTracks(arr) {
 // ****still need to undo the increment if option changes before submit *******
 export function handleIncrementLocation(form) {
   // now we take this form and change the select options value and text content
-  console.log("selected form id", form.id);
   const selectedOption = Array.from(form.querySelectorAll("option")).filter(
     (opt) => opt.selected,
   )[0];
@@ -89,6 +88,28 @@ export function handleIncrementLocation(form) {
 
   selectedOption.value = reassembledString;
   selectedOption.textContent = reassembledString;
-  console.log("the selected options value", selectedOption.value);
-  console.log("the selected options text", selectedOption.textContent);
+}
+export const incrementCheckbox = document.getElementById("increment-location");
+export function handleIncrementReset() {
+  incrementCheckbox.checked = false;
+}
+
+export const incrementLocationSwitch = () => incrementCheckbox.checked;
+// when the incr box is checked, get the active form
+export function handleCheckbox(arr) {
+  const activeForm = arr.filter((form) =>
+    form.classList.contains("active-form"),
+  );
+  if (incrementLocationSwitch()) {
+    if (
+      window.confirm(
+        "Once incremented, to undo, for now just refresh the page.",
+      )
+    ) {
+      handleIncrementLocation(activeForm[0]);
+    } else {
+      handleIncrementReset();
+      return;
+    }
+  }
 }
