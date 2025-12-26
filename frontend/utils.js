@@ -113,3 +113,12 @@ export function handleCheckbox(arr) {
     }
   }
 }
+
+export function trimDataFields(data) {
+  for (const key in data) {
+    if (typeof data[key] === "string") {
+      data[key] = data[key].trim();
+    }
+  }
+  return data;
+}

@@ -8,6 +8,7 @@ import {
   incrementCheckbox,
   handleCheckbox,
   incrementLocationSwitch,
+  trimDataFields,
 } from "./utils.js";
 import { getLocations } from "./getCurrentLocations.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
@@ -23,15 +24,6 @@ const btnTapes = document.querySelector(".btn-tapes");
 const buttons = [btnComps, btnSingles, btnMain, btnRecords, btnTapes];
 const forms = [cdCompsForm, cdSinglesForm, cdsMainForm, recordsForm, tapesForm];
 const incrementWrapper = document.querySelector(".increment-wrapper");
-
-function trimDataFields(data) {
-  for (const key in data) {
-    if (typeof data[key] === "string") {
-      data[key] = data[key].trim();
-    }
-  }
-  return data;
-}
 
 // when a nav button is clicked, show the appropriate form
 function handleNavBtnClick(e) {
