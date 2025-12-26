@@ -24,6 +24,15 @@ const buttons = [btnComps, btnSingles, btnMain, btnRecords, btnTapes];
 const forms = [cdCompsForm, cdSinglesForm, cdsMainForm, recordsForm, tapesForm];
 const incrementWrapper = document.querySelector(".increment-wrapper");
 
+function trimDataFields(data) {
+  for (const key in data) {
+    if (typeof data[key] === "string") {
+      data[key] = data[key].trim();
+    }
+  }
+  return data;
+}
+
 // when a nav button is clicked, show the appropriate form
 function handleNavBtnClick(e) {
   if (document.startViewTransition) {
@@ -65,7 +74,7 @@ async function handleCdsMainForm(e) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(trimDataFields(data)),
   };
 
   try {
@@ -140,7 +149,7 @@ async function handleCdCompsForm(e) {
     headers: {
       "content-type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(trimDataFields(data)),
   };
 
   if (!noEmptyFields(data, true)) {
@@ -218,7 +227,7 @@ async function handleRecordsForm(e) {
     headers: {
       "content-type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(trimDataFields(data)),
   };
 
   if (noEmptyFields(data, false)) {
@@ -263,25 +272,50 @@ async function handleTapesForm(e) {
     speed: formData.get("tapeSpeed"),
   };
 
+  if (!noEmptyFields(data, false)) {
+    toasty("All fields must be filled out.", "red");
+    console.log("All fields must be filled out.");
+    return;
+  }
+
+  if (!yearFormatIsGood(data.year)) {
+    toasty("Year must be 4 digits", "red");
+    return;
+  }
+
   const options = {
     method: "POST",
     headers: {
       "content-type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(trimDataFields(data)),
   };
 
-  try {
-    const res = await fetch("/tapes", options);
-    const data = await res.json();
-    tapesForm.reset();
-    console.log("new item id: ", data);
-    if (incrementLocationSwitch()) {
-      await getLocations();
-      handleIncrementReset();
+  if (noEmptyFields(data, false)) {
+    try {
+      const res = await fetch("/tapes", options);
+      if (res.status === 400) {
+        const errs = await res.json();
+        errs.forEach((er) => {
+          toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
+          console.log(`Value: ${er.value} ; Message: ${er.msg}`);
+        });
+        return;
+      }
+      const resData = await res.json();
+      tapesForm.reset();
+      toasty(
+        `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
+        "green",
+      );
+      console.log("new item id: ", resData);
+      if (incrementLocationSwitch()) {
+        await getLocations();
+        handleIncrementReset();
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
 }
 
@@ -321,7 +355,7 @@ async function handleCdSinglesForm(e) {
     headers: {
       "content-type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(trimDataFields(data)),
   };
 
   if (noEmptyFields(data, true)) {
