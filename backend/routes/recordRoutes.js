@@ -35,7 +35,7 @@ router.post(
   body("sleeve_condition")
     .exists()
     .notEmpty()
-    .matches(/^\*+$/)
+    .matches(/^(\*|na)$/)
     .withMessage("Field may only contain *")
     .isLength({ min: 1, max: 5 })
     .withMessage("Field must contain between 1 and 5 stars"),
