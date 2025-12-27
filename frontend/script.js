@@ -46,59 +46,6 @@ function handleNavBtnClick(e) {
   }
 }
 
-async function handleCdsMainForm(e) {
-  e.preventDefault();
-  const formData = new FormData(cdsMainForm);
-
-  const data = {
-    artist: formData.get("artist"),
-    title: formData.get("title"),
-    location: formData.get("location"),
-  };
-
-  if (!noEmptyFields(data, false)) {
-    toasty("All fields must be filled out.", "red");
-    return;
-  }
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(trimDataFields(data)),
-  };
-
-  try {
-    const res = await fetch("/cds-main", options);
-    if (res.status === 400) {
-      const errs = await res.json();
-      errs.forEach((er) => {
-        toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
-        console.log(`Value: ${er.value} ; Message: ${er.msg}`);
-      });
-      return;
-    }
-    const resData = await res.json();
-    toasty(
-      `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
-      "green",
-    );
-
-    cdsMainForm.reset();
-
-    console.log("new item id: ", resData);
-
-    if (incrementLocationSwitch()) {
-      await getLocations();
-      handleIncrementReset();
-    }
-  } catch (error) {
-    toasty(error, "red");
-    console.log(error);
-  }
-}
-
 async function handleCdCompsForm(e) {
   e.preventDefault();
   const formData = new FormData(cdCompsForm);
@@ -157,155 +104,35 @@ async function handleCdCompsForm(e) {
   if (noEmptyFields(data, true)) {
     try {
       const res = await fetch("/cd-comps", options);
-      const resData = await res.json();
-      const id = resData.titleId;
 
-      // if no id, print the backend validation errors
-      if (id == undefined) {
-        for (let i = 0; i < resData.length; i++) {
-          toasty(
-            `Value: ${resData[i].value}; Message: ${resData[i].msg}`,
-            "red",
-          );
-          console.log(resData[i]);
+      if (res.status === 400) {
+        const errs = await res.json();
+        errs.forEach((er) => {
+          toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
+          console.log(`Value: ${er.value} ; Message: ${er.msg}`);
+        });
+        return;
+      }
+
+      if (res.status === 201) {
+        const resData = await res.json();
+        const id = resData.titleId;
+
+        cdCompsForm.reset();
+        toasty(
+          `${data.title} has been added to the database with id ${id}.`,
+          "green",
+        );
+
+        if (incrementLocationSwitch()) {
+          await getLocations();
+          handleIncrementReset();
         }
-        return;
-      }
-      cdCompsForm.reset();
-      toasty(
-        `${data.title} has been added to the database with id ${id}.`,
-        "green",
-      );
-      if (incrementLocationSwitch()) {
-        await getLocations();
-        handleIncrementReset();
-      }
-      console.log("new item id: ", id);
-    } catch (error) {
-      toasty(error, "red");
-      console.log(error);
-    }
-  }
-}
 
-async function handleRecordsForm(e) {
-  e.preventDefault();
-  const formData = new FormData(recordsForm);
-
-  const data = {
-    artist: formData.get("artist"),
-    title: formData.get("title"),
-    location: formData.get("location"),
-    year: Number(formData.get("year")),
-    diameter: formData.get("diameter"),
-    sleeve_condition: formData.get("sleeveCondition"),
-    record_condition: formData.get("recordCondition"),
-    label: formData.get("label"),
-  };
-
-  if (!noEmptyFields(data, false)) {
-    toasty("All fields must be filled out.", "red");
-    console.log("All fields must be filled out.");
-    return;
-  }
-
-  if (!yearFormatIsGood(data.year)) {
-    toasty("Year must be 4 digits", "red");
-    return;
-  }
-
-  const options = {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(trimDataFields(data)),
-  };
-
-  if (noEmptyFields(data, false)) {
-    try {
-      const res = await fetch("/records", options);
-      if (res.status === 400) {
-        const errs = await res.json();
-        errs.forEach((er) => {
-          toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
-          console.log(`Value: ${er.value} ; Message: ${er.msg}`);
-        });
-        return;
-      }
-      const resData = await res.json();
-      recordsForm.reset();
-      toasty(
-        `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
-        "green",
-      );
-      console.log("new item id: ", resData);
-      if (incrementLocationSwitch()) {
-        await getLocations();
-        handleIncrementReset();
+        console.log("new item id: ", id);
       }
     } catch (error) {
       toasty(error, "red");
-      console.log(error);
-    }
-  }
-}
-
-async function handleTapesForm(e) {
-  e.preventDefault();
-  const formData = new FormData(tapesForm);
-
-  const data = {
-    artist: formData.get("artist"),
-    title: formData.get("title"),
-    location: formData.get("location"),
-    year: Number(formData.get("year")),
-    needsRepair: formData.get("needsRepair"),
-    speed: formData.get("tapeSpeed"),
-  };
-
-  if (!noEmptyFields(data, false)) {
-    toasty("All fields must be filled out.", "red");
-    console.log("All fields must be filled out.");
-    return;
-  }
-
-  if (!yearFormatIsGood(data.year)) {
-    toasty("Year must be 4 digits", "red");
-    return;
-  }
-
-  const options = {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(trimDataFields(data)),
-  };
-
-  if (noEmptyFields(data, false)) {
-    try {
-      const res = await fetch("/tapes", options);
-      if (res.status === 400) {
-        const errs = await res.json();
-        errs.forEach((er) => {
-          toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
-          console.log(`Value: ${er.value} ; Message: ${er.msg}`);
-        });
-        return;
-      }
-      const resData = await res.json();
-      tapesForm.reset();
-      toasty(
-        `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
-        "green",
-      );
-      console.log("new item id: ", resData);
-      if (incrementLocationSwitch()) {
-        await getLocations();
-        handleIncrementReset();
-      }
-    } catch (error) {
       console.log(error);
     }
   }
@@ -353,25 +180,223 @@ async function handleCdSinglesForm(e) {
   if (noEmptyFields(data, true)) {
     try {
       const res = await fetch("/cd-singles", options);
-      // toast a regular server error
-      if (res.status === 500)
-        return toasty("Something went wrong, try again.", "red");
-      // if not server error, must be validation errors, make some more toast.
-      if (res.status !== 201) {
-        const data = await res.json();
-        toasty(`Value: ${data[0].value} Message: ${data[0].msg}`, "red");
-        console.log(data[0].value, data[0].msg);
+
+      if (res.status === 400) {
+        const errs = await res.json();
+        errs.forEach((er) => {
+          toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
+          console.log(`Value: ${er.value} ; Message: ${er.msg}`);
+        });
         return;
       }
-      const id = await res.json();
-      cdSinglesForm.reset();
-      toasty(
-        `${data.artist} - ${data.title} was added to the database with id: ${id}`,
-        "green",
-      );
-      console.log("new item id: ", id);
+
+      if (res.status === 201) {
+        const id = await res.json();
+        cdSinglesForm.reset();
+        toasty(
+          `${data.artist} - ${data.title} was added to the database with id: ${id}`,
+          "green",
+        );
+
+        console.log("new item id: ", id);
+
+        // these locations are fixed and will not be incremented
+      }
     } catch (error) {
       toasty(error, "red");
+      console.log(error);
+    }
+  }
+}
+
+async function handleCdsMainForm(e) {
+  e.preventDefault();
+  const formData = new FormData(cdsMainForm);
+
+  const data = {
+    artist: formData.get("artist"),
+    title: formData.get("title"),
+    location: formData.get("location"),
+  };
+
+  if (!noEmptyFields(data, false)) {
+    toasty("All fields must be filled out.", "red");
+    return;
+  }
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(trimDataFields(data)),
+  };
+
+  try {
+    const res = await fetch("/cds-main", options);
+
+    if (res.status === 400) {
+      const errs = await res.json();
+      errs.forEach((er) => {
+        toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
+        console.log(`Value: ${er.value} ; Message: ${er.msg}`);
+      });
+      return;
+    }
+
+    if (res.status === 201) {
+      const resData = await res.json();
+      toasty(
+        `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
+        "green",
+      );
+
+      cdsMainForm.reset();
+
+      console.log("new item id: ", resData);
+
+      if (incrementLocationSwitch()) {
+        await getLocations();
+        handleIncrementReset();
+      }
+    }
+  } catch (error) {
+    toasty(error, "red");
+    console.log(error);
+  }
+}
+
+async function handleRecordsForm(e) {
+  e.preventDefault();
+  const formData = new FormData(recordsForm);
+
+  const data = {
+    artist: formData.get("artist"),
+    title: formData.get("title"),
+    location: formData.get("location"),
+    year: Number(formData.get("year")),
+    diameter: formData.get("diameter"),
+    sleeve_condition: formData.get("sleeveCondition"),
+    record_condition: formData.get("recordCondition"),
+    label: formData.get("label"),
+  };
+
+  if (!noEmptyFields(data, false)) {
+    toasty("All fields must be filled out.", "red");
+    console.log("All fields must be filled out.");
+    return;
+  }
+
+  if (!yearFormatIsGood(data.year)) {
+    toasty("Year must be 4 digits", "red");
+    return;
+  }
+
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(trimDataFields(data)),
+  };
+
+  if (noEmptyFields(data, false)) {
+    try {
+      const res = await fetch("/records", options);
+
+      if (res.status === 400) {
+        const errs = await res.json();
+        errs.forEach((er) => {
+          toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
+          console.log(`Value: ${er.value} ; Message: ${er.msg}`);
+        });
+        return;
+      }
+
+      if (res.status === 201) {
+        const resData = await res.json();
+        recordsForm.reset();
+        toasty(
+          `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
+          "green",
+        );
+
+        console.log("new item id: ", resData);
+
+        if (incrementLocationSwitch()) {
+          await getLocations();
+          handleIncrementReset();
+        }
+      }
+    } catch (error) {
+      toasty(error, "red");
+      console.log(error);
+    }
+  }
+}
+
+async function handleTapesForm(e) {
+  e.preventDefault();
+  const formData = new FormData(tapesForm);
+
+  const data = {
+    artist: formData.get("artist"),
+    title: formData.get("title"),
+    location: formData.get("location"),
+    year: Number(formData.get("year")),
+    needsRepair: formData.get("needsRepair"),
+    speed: formData.get("tapeSpeed"),
+  };
+
+  if (!noEmptyFields(data, false)) {
+    toasty("All fields must be filled out.", "red");
+    console.log("All fields must be filled out.");
+    return;
+  }
+
+  if (!yearFormatIsGood(data.year)) {
+    toasty("Year must be 4 digits", "red");
+    return;
+  }
+
+  const options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(trimDataFields(data)),
+  };
+
+  if (noEmptyFields(data, false)) {
+    try {
+      const res = await fetch("/tapes", options);
+
+      if (res.status === 400) {
+        const errs = await res.json();
+        errs.forEach((er) => {
+          toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
+          console.log(`Value: ${er.value} ; Message: ${er.msg}`);
+        });
+        return;
+      }
+
+      if (res.status === 201) {
+        const resData = await res.json();
+
+        tapesForm.reset();
+        toasty(
+          `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
+          "green",
+        );
+
+        if (incrementLocationSwitch()) {
+          await getLocations();
+          handleIncrementReset();
+        }
+
+        console.log("new item id: ", resData);
+      }
+    } catch (error) {
       console.log(error);
     }
   }
