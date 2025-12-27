@@ -9,6 +9,7 @@ import {
   handleCheckbox,
   incrementLocationSwitch,
   trimDataFields,
+  addToSessionList,
 } from "./utils.js";
 import { getLocations } from "./getCurrentLocations.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
@@ -24,6 +25,9 @@ const btnTapes = document.querySelector(".btn-tapes");
 const buttons = [btnComps, btnSingles, btnMain, btnRecords, btnTapes];
 const forms = [cdCompsForm, cdSinglesForm, cdsMainForm, recordsForm, tapesForm];
 const incrementWrapper = document.querySelector(".increment-wrapper");
+const sessionListWrapper = document.querySelector(".session-list-wrapper");
+const sessionList = document.getElementById("session-list");
+let showSessionList = false;
 
 // when a nav button is clicked, show the appropriate form
 function handleNavBtnClick(e) {
@@ -129,6 +133,15 @@ async function handleCdCompsForm(e) {
           handleIncrementReset();
         }
 
+        if (!showSessionList) {
+          showSessionList = true;
+          sessionListWrapper.style.display = "block";
+        }
+
+        // add item data to the session list
+        const sessionListStr = `id: ${id} ${data.title} was added to cd comps`;
+        addToSessionList(sessionList, sessionListStr, "cd-comp-color");
+
         console.log("new item id: ", id);
       }
     } catch (error) {
@@ -200,6 +213,14 @@ async function handleCdSinglesForm(e) {
 
         console.log("new item id: ", id);
 
+        if (!showSessionList) {
+          showSessionList = true;
+          sessionListWrapper.style.display = "block";
+        }
+
+        // add item data to the session list
+        const sessionListStr = `id: ${id} ${data.artist} - ${data.title} was added to cd singles.`;
+        addToSessionList(sessionList, sessionListStr, "cd-single-color");
         // these locations are fixed and will not be incremented
       }
     } catch (error) {
@@ -259,6 +280,15 @@ async function handleCdsMainForm(e) {
         await getLocations();
         handleIncrementReset();
       }
+
+      if (!showSessionList) {
+        showSessionList = true;
+        sessionListWrapper.style.display = "block";
+      }
+
+      // add item data to the session list
+      const sessionListStr = `id: ${resData} ${data.artist} - ${data.title} was added to cds main.`;
+      addToSessionList(sessionList, sessionListStr, "cds-main-color");
     }
   } catch (error) {
     toasty(error, "red");
@@ -327,6 +357,15 @@ async function handleRecordsForm(e) {
           await getLocations();
           handleIncrementReset();
         }
+
+        if (!showSessionList) {
+          showSessionList = true;
+          sessionListWrapper.style.display = "block";
+        }
+
+        // add item data to the session list
+        const sessionListStr = `id: ${resData} ${data.artist} - ${data.title} was added to records.`;
+        addToSessionList(sessionList, sessionListStr, "record-color");
       }
     } catch (error) {
       toasty(error, "red");
@@ -395,6 +434,15 @@ async function handleTapesForm(e) {
         }
 
         console.log("new item id: ", resData);
+
+        if (!showSessionList) {
+          showSessionList = true;
+          sessionListWrapper.style.display = "block";
+        }
+
+        // add item data to the session list
+        const sessionListStr = `id: ${resData} ${data.artist} - ${data.title} was added to tapes.`;
+        addToSessionList(sessionList, sessionListStr, "tape-color");
       }
     } catch (error) {
       console.log(error);

@@ -72,3 +72,27 @@ fieldset {
     max-width: 40ch;
   }
 }
+
+.session-list-wrapper {
+  display: none;
+}
+
+.cd-comp-color {
+  color: rgb(255, 87, 219);
+}
+
+.cd-single-color {
+  color: rgb(255, 241, 119);
+}
+
+.cds-main-color {
+  color: rgb(119, 255, 130);
+}
+
+.record-color {
+  color: rgb(124, 229, 255);
+}
+
+.tape-color {
+  color: rgb(207, 149, 255);
+}

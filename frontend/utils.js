@@ -122,3 +122,10 @@ export function trimDataFields(data) {
   }
   return data;
 }
+
+export function addToSessionList(list, str, className) {
+  const li = document.createElement("li");
+  li.textContent = str;
+  li.classList.add(className);
+  list.prepend(li);
+}
