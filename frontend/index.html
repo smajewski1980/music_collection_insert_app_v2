@@ -28,13 +28,13 @@
   </head>
   <body>
     <header>
-      <h1>Music Catalog Insert App</h1>
+      <h1>Music Catalog <br />Insert Tool</h1>
       <nav>
         <ul>
           <li>
             <button
               data-form="cd-comps-form"
-              class="btn-cd-comps"
+              class="btn-cd-comps cd-comp-color"
             >
               Cd-Compilations
             </button>
@@ -42,7 +42,7 @@
           <li>
             <button
               data-form="cd-singles-form"
-              class="btn-cd-singles"
+              class="btn-cd-singles cd-single-color"
             >
               Cd-Singles
             </button>
@@ -50,7 +50,7 @@
           <li>
             <button
               data-form="cd-main-form"
-              class="btn-cd-main"
+              class="btn-cd-main cd-main-color"
             >
               Cd-Main Catalog
             </button>
@@ -58,7 +58,7 @@
           <li>
             <button
               data-form="records-form"
-              class="btn-records"
+              class="btn-records record-color"
             >
               Records
             </button>
@@ -66,7 +66,7 @@
           <li>
             <button
               data-form="tapes-form"
-              class="btn-tapes"
+              class="btn-tapes tape-color"
             >
               Tapes
             </button>
@@ -78,7 +78,7 @@
     <main>
       <!-- -----------------------------------------------CD COMPS -->
       <form id="cd-comps-form">
-        <h2>Cd Compilations Form</h2>
+        <h2 class="cd-comp-color">Cd Compilations Form</h2>
         <div class="form-group">
           <label for="cd-comps-title">title</label>
           <input
@@ -120,7 +120,7 @@
 
       <!-- ------------------------------------------------------CD SINGLES -->
       <form id="cd-singles-form">
-        <h2>Cd Singles Form</h2>
+        <h2 class="cd-single-color">Cd Singles Form</h2>
         <div class="form-group">
           <label for="cd-singles-artist">artist</label>
           <input
@@ -171,7 +171,7 @@
 
       <!-- ----------------------------------------------------CDS MAIN -->
       <form id="cd-main-form">
-        <h2>Cd Main Catalog Form</h2>
+        <h2 class="cds-main-color">Cd Main Catalog Form</h2>
         <div class="form-group">
           <label for="cds-main-artist">artist</label>
           <input
@@ -204,7 +204,7 @@
 
       <!-- ----------------------------------------------------RECORDS -->
       <form id="records-form">
-        <h2>Records Form</h2>
+        <h2 class="record-color">Records Form</h2>
         <div class="form-group">
           <label for="records-artist">artist</label>
           <input
@@ -303,7 +303,7 @@
 
       <!-- -------------------------------------------------------TAPES -->
       <form id="tapes-form">
-        <h2>Tapes Form</h2>
+        <h2 class="tape-color">Tapes Form</h2>
         <div class="form-group">
           <label for="tapes-artist">artist</label>
           <input
