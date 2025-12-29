@@ -30,7 +30,6 @@ const incrementWrapper = document.querySelector(".increment-wrapper");
 const sessionListWrapper = document.querySelector(".session-list-wrapper");
 const sessionList = document.getElementById("session-list");
 let showSessionList = false;
-const themeToggleSwitch = document.getElementById("theme-toggle");
 
 // when a nav button is clicked, show the appropriate form
 function handleNavBtnClick(e) {
@@ -477,21 +476,21 @@ incrementCheckbox.addEventListener("change", () => {
   handleCheckbox(forms);
 });
 
-themeToggleSwitch.addEventListener("change", handleThemeChange);
-
 // slider
-const planSlider = document.getElementById("plan-slider");
+const themeSlider = document.getElementById("theme-slider");
 const slide = document.getElementById("slide");
-let billingFrequency = "monthly";
+let theme = "dark";
 
-function handleBillingFrequency() {
-  if (billingFrequency === "monthly") {
-    billingFrequency = "yearly";
+function handleThemeToggle() {
+  if (theme === "dark") {
+    theme = "light";
     slide.style.right = ".125rem";
+    handleThemeChange();
   } else {
-    billingFrequency = "monthly";
+    theme = "dark";
     slide.style.right = "1.125rem";
+    handleThemeChange();
   }
 }
 
-planSlider.addEventListener("click", handleBillingFrequency);
+themeSlider.addEventListener("click", handleThemeToggle);
