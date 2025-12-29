@@ -44,6 +44,8 @@ body {
   background: light-dark(rgb(187, 187, 187), black);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  display: grid;
+  justify-content: center;
 }
 
 img {
@@ -53,35 +55,83 @@ img {
 
 button {
   cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: none;
+  outline: 3px solid currentColor;
 }
 
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
+  color: currentColor;
+  background: transparent;
 }
 
 /* something funky with the heading font in ffox... */
 h1,
 h2 {
   font-family: var(--heading-font);
-  letter-spacing: 2px;
+  letter-spacing: 5px;
   font-size: 3rem;
 }
 
-h1 {
-  margin-block: 1rem;
-  font-size: 4rem;
-}
-
-nav {
-  margin-block-end: 1rem;
-  ul {
-    display: flex;
-    gap: 1rem;
-    list-style-type: none;
+header {
+  h1 {
+    margin-block-start: 1rem;
+    font-size: 4rem;
+    line-height: 1;
+    text-align: center;
   }
-  button {
-    background: transparent;
+
+  .theme-slider-wrapper {
+    align-items: center;
+    border-radius: 10px;
+    color: light-dark(var(--clr-font-main));
+    display: flex;
+    justify-content: center;
+    margin-block-end: 1rem;
+    width: 250px;
+    margin-inline: auto;
+
+    #theme-slider {
+      outline: 1px solid light-dark(var(--clr-font-main));
+      border-radius: 999vw;
+      cursor: pointer;
+      height: 1rem;
+      margin-inline: 0.5rem;
+      padding: 0.125rem;
+      position: relative;
+      width: 2rem;
+
+      #slide {
+        aspect-ratio: 1;
+        background-color: light-dark(var(--clr-font-main));
+        border-radius: 50%;
+        height: 0.75rem;
+        position: absolute;
+        right: 1.125rem;
+        transition: right 0.25s ease;
+      }
+    }
+  }
+
+  nav {
+    margin-block-end: 1rem;
+
+    ul {
+      display: flex;
+      gap: 1rem;
+      list-style-type: none;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      li {
+        width: fit-content;
+      }
+    }
   }
 }
 
@@ -103,8 +153,6 @@ fieldset {
 
   .increment-inner-wrapper {
     width: fit-content;
-    outline: 1px solid white;
-    padding: 0.25rem;
   }
 
   label {
@@ -156,35 +204,4 @@ fieldset {
 }
 [data-theme="light"] {
   color-scheme: light;
-}
-
-.theme-slider-wrapper {
-  align-items: center;
-  border-radius: 10px;
-  color: light-dark(var(--clr-font-main));
-  display: flex;
-  justify-content: center;
-  padding-block: 0.75rem;
-  width: 250px;
-
-  #theme-slider {
-    outline: 1px solid light-dark(var(--clr-font-main));
-    border-radius: 999vw;
-    cursor: pointer;
-    height: 1rem;
-    margin-inline: 0.5rem;
-    padding: 0.125rem;
-    position: relative;
-    width: 2rem;
-
-    #slide {
-      aspect-ratio: 1;
-      background-color: light-dark(var(--clr-font-main));
-      border-radius: 50%;
-      height: 0.75rem;
-      position: absolute;
-      right: 1.125rem;
-      transition: right 0.25s ease;
-    }
-  }
 }
