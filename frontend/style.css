@@ -150,3 +150,10 @@ fieldset {
   color: light-dark(var(--clr-tapes));
   border-color: light-dark(var(--clr-tapes));
 }
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+[data-theme="light"] {
+  color-scheme: light;
+}

@@ -11,6 +11,7 @@ import {
   trimDataFields,
   addToSessionList,
   focusFirstField,
+  handleThemeChange,
 } from "./utils.js";
 import { getLocations } from "./getCurrentLocations.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
@@ -29,6 +30,7 @@ const incrementWrapper = document.querySelector(".increment-wrapper");
 const sessionListWrapper = document.querySelector(".session-list-wrapper");
 const sessionList = document.getElementById("session-list");
 let showSessionList = false;
+const themeToggleSwitch = document.getElementById("theme-toggle");
 
 // when a nav button is clicked, show the appropriate form
 function handleNavBtnClick(e) {
@@ -474,3 +476,5 @@ tapesForm.addEventListener("submit", handleTapesForm);
 incrementCheckbox.addEventListener("change", () => {
   handleCheckbox(forms);
 });
+
+themeToggleSwitch.addEventListener("change", handleThemeChange);

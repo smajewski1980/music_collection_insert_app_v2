@@ -134,3 +134,11 @@ export function focusFirstField(form) {
   const firstField = form.querySelector("input");
   firstField.focus();
 }
+
+export function handleThemeChange() {
+  const currTheme = document.documentElement.getAttribute("data-theme");
+  document.documentElement.setAttribute(
+    "data-theme",
+    currTheme === "light" ? "dark" : "light",
+  );
+}
