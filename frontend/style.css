@@ -69,7 +69,7 @@ button {
 button,
 input,
 textarea,
-select option {
+select {
   font: inherit;
   color: currentColor;
   background: transparent;
@@ -81,14 +81,14 @@ h2 {
   font-family: var(--heading-font);
   letter-spacing: 5px;
   font-size: 3rem;
+  margin-block-start: 1rem;
+  text-align: center;
 }
 
 header {
   h1 {
-    margin-block-start: 1rem;
     font-size: 4rem;
     line-height: 1;
-    text-align: center;
   }
 
   .theme-slider-wrapper {
@@ -143,44 +143,139 @@ header {
   }
 }
 
-/* --- */
-form {
-  display: none;
-}
+main {
+  /* later add mq */
+  min-width: 40rem;
+  max-width: 640px;
+  margin-inline: auto;
 
-.active-form {
-  display: block;
-}
+  form {
+    display: none;
+    max-width: 100%;
 
-fieldset {
-  width: fit-content;
-}
+    h2 {
+      margin-block-end: 1rem;
+    }
 
-.increment-wrapper {
-  display: none;
-  margin-block-start: 1rem;
+    .form-group {
+      display: grid;
+      justify-items: center;
+      max-width: 100%;
+      font-size: 1.5rem;
 
-  .increment-inner-wrapper {
+      input,
+      select,
+      textarea {
+        margin-block: 0.5rem 1rem;
+        border: none;
+        outline: 1px solid currentColor;
+        text-align: center;
+        padding: 0.25rem 0.5rem 0.35rem;
+        border-radius: 10px;
+      }
+
+      input {
+        field-sizing: content;
+        min-width: 75%;
+        max-width: 800px;
+      }
+
+      select {
+        min-width: 75%;
+        background: black;
+
+        option {
+          background: transparent;
+        }
+      }
+
+      textarea {
+        field-sizing: content;
+        min-width: 75%;
+        max-width: 800px;
+      }
+    }
+
+    fieldset {
+      width: 40%;
+      border-color: light-dark(var(--clr-font-main));
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-inline: 1rem;
+      padding-block-end: 0.75rem;
+      margin-block-end: 1rem;
+
+      legend {
+        padding-inline: 0.75rem;
+        text-align: center;
+      }
+
+      .radio-group {
+        display: grid;
+        justify-content: center;
+        justify-items: center;
+
+        & * {
+          cursor: pointer;
+        }
+
+        input {
+          accent-color: light-dark(var(--clr-font-main));
+          outline: none;
+          scale: 1.5;
+        }
+      }
+    }
+
+    button {
+      font-size: 1.125rem;
+      display: block;
+      width: 250px;
+      margin: 1rem auto;
+      padding: 0.75rem 1rem 0.85rem;
+    }
+  }
+  .active-form {
+    display: block;
+  }
+
+  .increment-wrapper {
+    display: none;
+    margin-block: 1.5rem;
+    margin-inline: auto;
     width: fit-content;
+
+    & * {
+      cursor: pointer;
+    }
+
+    .increment-inner-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    label {
+      display: inline-block;
+      margin-inline-start: 0.5rem;
+      font-size: 1.125rem;
+      padding-block-end: 0.1rem;
+    }
+
+    input {
+      width: 1.25rem;
+      aspect-ratio: 1;
+    }
   }
 
-  label {
-    display: inline-block;
-    margin-inline-start: 0.5rem;
+  .session-list-wrapper {
+    display: none;
+    max-height: 16rem;
+    overflow-y: scroll;
+    width: 32rem;
+    scrollbar-width: thin !important;
+    /* need to come back to why this color wont work */
+    /* scrollbar-color: red, green; */
   }
-  p {
-    max-width: 40ch;
-  }
-}
-
-.session-list-wrapper {
-  display: none;
-  max-height: 16rem;
-  overflow-y: scroll;
-  width: 32rem;
-  scrollbar-width: thin !important;
-  /* need to come back to why this color wont work */
-  /* scrollbar-color: red, green; */
 }
 
 .cd-comp-color {
