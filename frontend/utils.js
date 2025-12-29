@@ -129,3 +129,8 @@ export function addToSessionList(list, str, className) {
   li.classList.add(className);
   list.prepend(li);
 }
+
+export function focusFirstField(form) {
+  const firstField = form.querySelector("input");
+  firstField.focus();
+}

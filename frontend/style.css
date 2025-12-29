@@ -60,6 +60,7 @@ input {
   font: inherit;
 }
 
+/* something funky with the heading font in ffox... */
 h1,
 h2 {
   font-family: var(--heading-font);

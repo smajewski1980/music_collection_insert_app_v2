@@ -10,6 +10,7 @@ import {
   incrementLocationSwitch,
   trimDataFields,
   addToSessionList,
+  focusFirstField,
 } from "./utils.js";
 import { getLocations } from "./getCurrentLocations.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
@@ -141,7 +142,7 @@ async function handleCdCompsForm(e) {
         // add item data to the session list
         const sessionListStr = `id: ${id} ${data.title} was added to cd comps`;
         addToSessionList(sessionList, sessionListStr, "cd-comp-color");
-
+        focusFirstField(cdCompsForm);
         console.log("new item id: ", id);
       }
     } catch (error) {
@@ -206,6 +207,7 @@ async function handleCdSinglesForm(e) {
       if (res.status === 201) {
         const id = await res.json();
         cdSinglesForm.reset();
+        focusFirstField(cdSinglesForm);
         toasty(
           `${data.artist} - ${data.title} was added to the database with id: ${id}`,
           "green",
@@ -273,7 +275,7 @@ async function handleCdsMainForm(e) {
       );
 
       cdsMainForm.reset();
-
+      focusFirstField(cdsMainForm);
       console.log("new item id: ", resData);
 
       if (incrementLocationSwitch()) {
@@ -346,6 +348,7 @@ async function handleRecordsForm(e) {
       if (res.status === 201) {
         const resData = await res.json();
         recordsForm.reset();
+        focusFirstField(recordsForm);
         toasty(
           `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
           "green",
@@ -423,6 +426,7 @@ async function handleTapesForm(e) {
         const resData = await res.json();
 
         tapesForm.reset();
+        focusFirstField(tapesForm);
         toasty(
           `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
           "green",
