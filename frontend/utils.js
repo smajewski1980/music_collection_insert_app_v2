@@ -40,10 +40,10 @@ export function toasty(msg, color) {
   let bg;
 
   if (color === "red") {
-    bg = "rgb(182, 97, 97)";
+    bg = "rgba(172, 38, 38, 1)";
   }
   if (color === "green") {
-    bg = "rgb(98, 148, 98)";
+    bg = "rgba(9, 119, 9, 1)";
   }
   if (!bg) {
     bg = color;
