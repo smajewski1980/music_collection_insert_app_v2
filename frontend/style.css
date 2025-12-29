@@ -117,6 +117,12 @@ fieldset {
 
 .session-list-wrapper {
   display: none;
+  max-height: 16rem;
+  overflow-y: scroll;
+  width: 32rem;
+  scrollbar-width: thin !important;
+  /* need to come back to why this color wont work */
+  /* scrollbar-color: red, green; */
 }
 
 .cd-comp-color {
