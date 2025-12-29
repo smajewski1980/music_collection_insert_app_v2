@@ -478,3 +478,20 @@ incrementCheckbox.addEventListener("change", () => {
 });
 
 themeToggleSwitch.addEventListener("change", handleThemeChange);
+
+// slider
+const planSlider = document.getElementById("plan-slider");
+const slide = document.getElementById("slide");
+let billingFrequency = "monthly";
+
+function handleBillingFrequency() {
+  if (billingFrequency === "monthly") {
+    billingFrequency = "yearly";
+    slide.style.right = ".125rem";
+  } else {
+    billingFrequency = "monthly";
+    slide.style.right = "1.125rem";
+  }
+}
+
+planSlider.addEventListener("click", handleBillingFrequency);

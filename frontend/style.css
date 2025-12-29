@@ -157,3 +157,36 @@ fieldset {
 [data-theme="light"] {
   color-scheme: light;
 }
+
+.plan-slider-wrapper {
+  align-items: center;
+  /* background-color: blue; */
+  border-radius: 10px;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  padding-block: 0.75rem;
+  width: 250px;
+
+  #plan-slider {
+    /* background-color: blue; */
+    outline: 1px solid white;
+    border-radius: 999vw;
+    cursor: pointer;
+    height: 1rem;
+    margin-inline: 0.5rem;
+    padding: 0.125rem;
+    position: relative;
+    width: 2rem;
+
+    #slide {
+      aspect-ratio: 1;
+      background-color: white;
+      border-radius: 50%;
+      height: 0.75rem;
+      position: absolute;
+      right: 1.125rem;
+      transition: right 0.25s ease;
+    }
+  }
+}
