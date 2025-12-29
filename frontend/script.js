@@ -12,6 +12,7 @@ import {
   addToSessionList,
   focusFirstField,
   handleThemeChange,
+  removeActiveClass,
 } from "./utils.js";
 import { getLocations } from "./getCurrentLocations.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
@@ -24,7 +25,7 @@ const btnSingles = document.querySelector(".btn-cd-singles");
 const btnMain = document.querySelector(".btn-cd-main");
 const btnRecords = document.querySelector(".btn-records");
 const btnTapes = document.querySelector(".btn-tapes");
-const buttons = [btnComps, btnSingles, btnMain, btnRecords, btnTapes];
+const navButtons = [btnComps, btnSingles, btnMain, btnRecords, btnTapes];
 const forms = [cdCompsForm, cdSinglesForm, cdsMainForm, recordsForm, tapesForm];
 const incrementWrapper = document.querySelector(".increment-wrapper");
 const sessionListWrapper = document.querySelector(".session-list-wrapper");
@@ -37,8 +38,12 @@ function handleNavBtnClick(e) {
     document.startViewTransition(() => {
       // reset the forms to not active
       removeActiveFormClass(forms);
+      // reset the active button
+      removeActiveClass(navButtons);
       // which form to load
       const clicked = e.target.dataset.form;
+      // add active class
+      e.target.classList.add("active-nav-btn"); //<-------------trying to get this to work
       // show it
       document.getElementById(clicked).classList.add("active-form");
       // on the initial load, display the increment location option
@@ -46,7 +51,9 @@ function handleNavBtnClick(e) {
     });
   } else {
     removeActiveFormClass(forms);
+    removeActiveClass(navButtons);
     const clicked = e.target.dataset.form;
+    e.target.classList.add("active-nav-btn");
     document.getElementById(clicked).classList.add("active-form");
     incrementWrapper.style.display = "block";
   }
@@ -456,7 +463,7 @@ async function handleTapesForm(e) {
 }
 
 // add the listeners to the nav btns
-buttons.forEach((btn) => {
+navButtons.forEach((btn) => {
   btn.addEventListener("click", handleNavBtnClick);
 });
 

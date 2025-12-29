@@ -1,15 +1,14 @@
 :root {
-  /* bright-peony */
   --clr-font-main: hsl(300, 100%, 25%), hsl(300, 100%, 72%);
-  /* lilac */
+
   --clr-cd-comps: hsl(320, 41%, 25%), hsl(320, 41%, 72%);
-  /* turquois */
+
   --clr-cd-singles: hsl(171, 65%, 25%), hsl(171, 65%, 66%);
-  /* ash-grey */
+
   --clr-cds-main: hsl(159, 31%, 25%), hsl(159, 31%, 78%);
-  /* --bright-indigo */
-  --clr-records: hsl(244, 86%, 19%), hsl(244, 86%, 67%);
-  /* dusty-grape */
+
+  --clr-records: hsl(244, 87%, 42%), hsl(244, 86%, 67%);
+
   /* --clr-tapes: hsl(245, 21%, 25%), hsl(245, 21%, 55%); */
 
   /* --dusty-olive: */
@@ -55,16 +54,22 @@ img {
 
 button {
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.6rem;
   border-radius: 10px;
   border: none;
   outline: 3px solid currentColor;
+  box-shadow: 0px 2px 8px currentColor;
+
+  &:hover {
+    scale: 1.05;
+    box-shadow: 0px 1px 6px currentColor;
+  }
 }
 
 button,
 input,
 textarea,
-select {
+select option {
   font: inherit;
   color: currentColor;
   background: transparent;
@@ -132,9 +137,13 @@ header {
         width: fit-content;
       }
     }
+    .active-nav-btn {
+      background-color: rgb(from currentColor r g b / 0.5);
+    }
   }
 }
 
+/* --- */
 form {
   display: none;
 }

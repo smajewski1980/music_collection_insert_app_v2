@@ -142,3 +142,9 @@ export function handleThemeChange() {
     currTheme === "light" ? "dark" : "light",
   );
 }
+
+export function removeActiveClass(btns) {
+  btns.forEach((btn) => {
+    btn.classList.remove("active-nav-btn");
+  });
+}
