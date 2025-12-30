@@ -45,7 +45,9 @@ function handleNavBtnClick(e) {
       // add active class
       e.target.classList.add("active-nav-btn"); //<-------------trying to get this to work
       // show it
-      document.getElementById(clicked).classList.add("active-form");
+      const activeForm = document.getElementById(clicked);
+      activeForm.classList.add("active-form");
+      activeForm.querySelector("input").focus();
       // on the initial load, display the increment location option
       incrementWrapper.style.display = "block";
     });
@@ -54,7 +56,9 @@ function handleNavBtnClick(e) {
     removeActiveClass(navButtons);
     const clicked = e.target.dataset.form;
     e.target.classList.add("active-nav-btn");
-    document.getElementById(clicked).classList.add("active-form");
+    const activeForm = document.getElementById(clicked);
+    activeForm.classList.add("active-form");
+    activeForm.querySelector("input").focus();
     incrementWrapper.style.display = "block";
   }
 }
