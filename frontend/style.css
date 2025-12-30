@@ -243,7 +243,8 @@ main {
     button:focus-visible,
     input:focus-visible,
     textarea:focus-visible,
-    select:focus-visible {
+    select:focus-visible,
+    input[type="radio"]:focus-visible {
       outline: 1px solid light-dark(black, white);
       outline-offset: 3px;
     }
