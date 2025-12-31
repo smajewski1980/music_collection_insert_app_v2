@@ -31,35 +31,57 @@ const incrementWrapper = document.querySelector(".increment-wrapper");
 const sessionListWrapper = document.querySelector(".session-list-wrapper");
 const sessionList = document.getElementById("session-list");
 let showSessionList = false;
+let initialLoad = true;
 
 // when a nav button is clicked, show the appropriate form
 function handleNavBtnClick(e) {
   if (document.startViewTransition) {
-    document.startViewTransition(() => {
-      // reset the forms to not active
-      removeActiveFormClass(forms);
-      // reset the active button
-      removeActiveClass(navButtons);
-      // which form to load
+    if (!initialLoad) {
+      document.startViewTransition(() => {
+        // reset the forms to not active
+        removeActiveFormClass(forms);
+        // reset the active button
+        removeActiveClass(navButtons);
+        // which form to load
+        const clicked = e.target.dataset.form;
+        // add active class
+        e.target.classList.add("active-nav-btn");
+        // show it
+        const activeForm = document.getElementById(clicked);
+        activeForm.classList.add("active-form");
+        activeForm.querySelector("input").focus();
+      });
+    } else {
       const clicked = e.target.dataset.form;
-      // add active class
-      e.target.classList.add("active-nav-btn"); //<-------------trying to get this to work
-      // show it
+      e.target.classList.add("active-nav-btn");
       const activeForm = document.getElementById(clicked);
       activeForm.classList.add("active-form");
       activeForm.querySelector("input").focus();
       // on the initial load, display the increment location option
       incrementWrapper.style.display = "block";
-    });
+
+      initialLoad = false;
+      activeForm.parentElement.style.opacity = 1;
+    }
   } else {
-    removeActiveFormClass(forms);
-    removeActiveClass(navButtons);
-    const clicked = e.target.dataset.form;
-    e.target.classList.add("active-nav-btn");
-    const activeForm = document.getElementById(clicked);
-    activeForm.classList.add("active-form");
-    activeForm.querySelector("input").focus();
-    incrementWrapper.style.display = "block";
+    if (!initialLoad) {
+      removeActiveFormClass(forms);
+      removeActiveClass(navButtons);
+      const clicked = e.target.dataset.form;
+      e.target.classList.add("active-nav-btn");
+      const activeForm = document.getElementById(clicked);
+      activeForm.classList.add("active-form");
+      activeForm.querySelector("input").focus();
+      incrementWrapper.style.display = "block";
+    } else {
+      const clicked = e.target.dataset.form;
+      e.target.classList.add("active-nav-btn"); //<-------------trying to get this to work
+      const activeForm = document.getElementById(clicked);
+      activeForm.querySelector("input").focus();
+      // on the initial load, display the increment location option
+      incrementWrapper.style.display = "block";
+      initialLoad = false;
+    }
   }
 }
 

@@ -87,6 +87,10 @@ h2 {
 }
 
 header {
+  background-color: light-dark(rgb(187, 187, 187), black);
+  view-transition-name: header-transition;
+  z-index: 999;
+
   h1 {
     font-size: 4rem;
     line-height: 1;
@@ -153,10 +157,13 @@ main {
   min-width: 40rem;
   max-width: 640px;
   margin-inline: auto;
+  opacity: 0;
+  transition: opacity 500ms;
 
   form {
     display: none;
     max-width: 100%;
+    view-transition-name: form-transition;
 
     h2 {
       margin-block-end: 1rem;
@@ -325,4 +332,44 @@ main {
 }
 [data-theme="light"] {
   color-scheme: light;
+}
+
+@keyframes form-leave {
+  from {
+    transform: translateY(0) scale(1);
+  }
+
+  65% {
+    transform: translateY(-50dvh) scale(0);
+  }
+
+  to {
+    transform: translateY(-100dvh) scale(0);
+  }
+}
+
+@keyframes form-enter {
+  0% {
+    transform: translateY(200dvh) scale(0);
+  }
+
+  35% {
+    transform: translateY(200dvh) scale(0);
+  }
+
+  80% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+::view-transition-group(form-transition) {
+  animation-duration: 1000ms;
+}
+
+::view-transition-old(form-transition) {
+  animation-name: form-leave;
+}
+
+::view-transition-new(form-transition) {
+  animation-name: form-enter;
 }
