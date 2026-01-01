@@ -13,6 +13,8 @@ import {
   focusFirstField,
   handleThemeChange,
   removeActiveClass,
+  showForm,
+  initialShowForm,
 } from "./utils.js";
 import { getLocations } from "./getCurrentLocations.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
@@ -32,54 +34,34 @@ const sessionListWrapper = document.querySelector(".session-list-wrapper");
 const sessionList = document.getElementById("session-list");
 let showSessionList = false;
 let initialLoad = true;
+const mainEl = document.querySelector("main");
 
 // when a nav button is clicked, show the appropriate form
 function handleNavBtnClick(e) {
   if (document.startViewTransition) {
     if (!initialLoad) {
       document.startViewTransition(() => {
-        // reset the forms to not active
         removeActiveFormClass(forms);
-        // reset the active button
         removeActiveClass(navButtons);
-        // which form to load
-        const clicked = e.target.dataset.form;
-        // add active class
-        e.target.classList.add("active-nav-btn");
-        // show it
-        const activeForm = document.getElementById(clicked);
-        activeForm.classList.add("active-form");
-        activeForm.querySelector("input").focus();
+        // the first arg is the id of the form to show, second arg is the nav btn
+        showForm(e.target.dataset.form, e.target);
       });
     } else {
-      const clicked = e.target.dataset.form;
-      e.target.classList.add("active-nav-btn");
-      const activeForm = document.getElementById(clicked);
-      activeForm.classList.add("active-form");
-      activeForm.querySelector("input").focus();
-      // on the initial load, display the increment location option
-      incrementWrapper.style.display = "block";
-
+      showForm(e.target.dataset.form, e.target);
+      // on the initial load, display the increment location option and the main element
+      initialShowForm(mainEl, incrementWrapper, initialLoad);
       initialLoad = false;
-      activeForm.parentElement.style.opacity = 1;
     }
   } else {
     if (!initialLoad) {
       removeActiveFormClass(forms);
       removeActiveClass(navButtons);
-      const clicked = e.target.dataset.form;
-      e.target.classList.add("active-nav-btn");
-      const activeForm = document.getElementById(clicked);
-      activeForm.classList.add("active-form");
-      activeForm.querySelector("input").focus();
-      incrementWrapper.style.display = "block";
+      // the first arg is the id of the form to show, second arg is the nav btn
+      showForm(e.target.dataset.form, e.target);
     } else {
-      const clicked = e.target.dataset.form;
-      e.target.classList.add("active-nav-btn"); //<-------------trying to get this to work
-      const activeForm = document.getElementById(clicked);
-      activeForm.querySelector("input").focus();
-      // on the initial load, display the increment location option
-      incrementWrapper.style.display = "block";
+      showForm(e.target.dataset.form, e.target);
+      // on the initial load, display the increment location option and the main element
+      initialShowForm(mainEl, incrementWrapper, initialLoad);
       initialLoad = false;
     }
   }

@@ -363,7 +363,7 @@ main {
 }
 
 ::view-transition-group(form-transition) {
-  animation-duration: 1000ms;
+  animation-duration: 800ms;
 }
 
 ::view-transition-old(form-transition) {

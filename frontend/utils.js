@@ -158,3 +158,16 @@ export function removeActiveClass(btns) {
     btn.classList.remove("active-nav-btn");
   });
 }
+
+export function showForm(formStr, navBtn) {
+  navBtn.classList.add("active-nav-btn");
+  const activeForm = document.getElementById(formStr);
+  activeForm.classList.add("active-form");
+  activeForm.querySelector("input").focus();
+}
+
+export function initialShowForm(mainEl, incrementWrapper, initialLoad) {
+  incrementWrapper.style.display = "block";
+  initialLoad = false;
+  mainEl.style.opacity = 1;
+}
