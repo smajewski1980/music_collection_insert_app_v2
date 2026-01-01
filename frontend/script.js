@@ -148,6 +148,7 @@ async function handleCdCompsForm(e) {
         addToSessionList(sessionList, sessionListStr, "cd-comp-color");
         focusFirstField(cdCompsForm);
         console.log("new item id: ", id);
+        window.scrollTo(0, 0);
       }
     } catch (error) {
       toasty(error, "red");
@@ -224,6 +225,8 @@ async function handleCdSinglesForm(e) {
           sessionListWrapper.style.display = "block";
         }
 
+        window.scrollTo(0, 0);
+
         // add item data to the session list
         const sessionListStr = `id: ${id} ${data.artist} - ${data.title} was added to cd singles.`;
         addToSessionList(sessionList, sessionListStr, "cd-single-color");
@@ -291,6 +294,8 @@ async function handleCdsMainForm(e) {
         showSessionList = true;
         sessionListWrapper.style.display = "block";
       }
+
+      window.scrollTo(0, 0);
 
       // add item data to the session list
       const sessionListStr = `id: ${resData} ${data.artist} - ${data.title} was added to cds main.`;
@@ -370,6 +375,8 @@ async function handleRecordsForm(e) {
           sessionListWrapper.style.display = "block";
         }
 
+        window.scrollTo(0, 0);
+
         // add item data to the session list
         const sessionListStr = `id: ${resData} ${data.artist} - ${data.title} was added to records.`;
         addToSessionList(sessionList, sessionListStr, "record-color");
@@ -447,6 +454,8 @@ async function handleTapesForm(e) {
           showSessionList = true;
           sessionListWrapper.style.display = "block";
         }
+
+        window.scrollTo(0, 0);
 
         // add item data to the session list
         const sessionListStr = `id: ${resData} ${data.artist} - ${data.title} was added to tapes.`;
