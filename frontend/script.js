@@ -38,6 +38,8 @@ const mainEl = document.querySelector("main");
 
 // when a nav button is clicked, show the appropriate form
 function handleNavBtnClick(e) {
+  if (e.target.classList.contains("active-nav-btn")) return;
+
   if (!initialLoad) {
     document.startViewTransition(() => {
       removeActiveFormClass(forms);
