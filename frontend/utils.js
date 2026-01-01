@@ -166,8 +166,7 @@ export function showForm(formStr, navBtn) {
   activeForm.querySelector("input").focus();
 }
 
-export function initialShowForm(mainEl, incrementWrapper, initialLoad) {
+export function initialShowForm(mainEl, incrementWrapper) {
   incrementWrapper.style.display = "block";
-  initialLoad = false;
   mainEl.style.opacity = 1;
 }
