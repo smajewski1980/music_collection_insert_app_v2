@@ -46,6 +46,7 @@ body {
   display: grid;
   justify-content: center;
   overflow-y: scroll;
+  transition: background-color 200ms, color 200ms;
 }
 
 img {
@@ -87,7 +88,11 @@ h2 {
 }
 
 header {
-  background-color: light-dark(rgb(187, 187, 187), black);
+  * {
+    transition: background-color 200ms, color 200ms;
+  }
+
+  /* background-color: light-dark(rgb(187, 187, 187), black); */
   view-transition-name: header-transition;
   z-index: 999;
 

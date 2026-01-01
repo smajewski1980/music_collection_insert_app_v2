@@ -138,19 +138,10 @@ export function focusFirstField(form) {
 export function handleThemeChange() {
   const currTheme = document.documentElement.getAttribute("data-theme");
 
-  if (document.startViewTransition) {
-    document.startViewTransition(() => {
-      document.documentElement.setAttribute(
-        "data-theme",
-        currTheme === "light" ? "dark" : "light",
-      );
-    });
-  } else {
-    document.documentElement.setAttribute(
-      "data-theme",
-      currTheme === "light" ? "dark" : "light",
-    );
-  }
+  document.documentElement.setAttribute(
+    "data-theme",
+    currTheme === "light" ? "dark" : "light",
+  );
 }
 
 export function removeActiveClass(btns) {
