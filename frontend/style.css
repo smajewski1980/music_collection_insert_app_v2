@@ -298,12 +298,14 @@ main {
 
   .session-list-wrapper {
     display: none;
-    max-height: 16rem;
-    overflow-y: scroll;
-    width: 32rem;
-    scrollbar-width: thin !important;
-    /* need to come back to why this color wont work */
-    /* scrollbar-color: red, green; */
+    max-width: 640px;
+    text-align: center;
+
+    ul {
+      max-height: 6.75rem;
+      scrollbar-width: thin !important;
+      overflow-y: scroll;
+    }
   }
 }
 

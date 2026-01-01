@@ -60,6 +60,7 @@ export function toasty(msg, color) {
       width: "fit-content",
       maxWidth: "640px",
       textAlign: "center",
+      borderRadius: "10px",
     },
   }).showToast();
 }
