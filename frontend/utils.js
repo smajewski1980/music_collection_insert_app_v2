@@ -52,9 +52,14 @@ export function toasty(msg, color) {
   Toastify({
     text: msg,
     duration: 5000,
-    gravity: "bottom",
+    gravity: "top",
+    position: "center",
     style: {
       background: bg,
+      fontSize: "1.5rem",
+      width: "fit-content",
+      maxWidth: "640px",
+      textAlign: "center",
     },
   }).showToast();
 }
