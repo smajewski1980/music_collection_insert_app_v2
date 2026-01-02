@@ -37,6 +37,7 @@
 
 ::selection {
   color: chartreuse;
+  background: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
 }
 
 body {
@@ -97,9 +98,23 @@ header {
   view-transition-name: header-transition;
   z-index: 999;
 
-  h1 {
-    font-size: 4rem;
-    line-height: 1;
+  .heading-img-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-block: 1rem;
+
+    img {
+      width: 250px;
+      height: 110px;
+      margin-block-start: 1.125rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      line-height: 1;
+    }
   }
 
   .theme-slider-wrapper {
