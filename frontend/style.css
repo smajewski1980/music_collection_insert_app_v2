@@ -1,19 +1,15 @@
 :root {
-  --clr-font-main: hsl(300, 100%, 25%), hsl(300, 100%, 72%);
+  --clr-font-main: hsl(300, 100%, 25%), hsl(300, 34%, 70%);
 
-  --clr-cd-comps: hsl(320, 41%, 25%), hsl(320, 41%, 72%);
+  --clr-cd-comps: hsl(360, 100%, 5%), hsl(0, 0%, 95%);
 
-  --clr-cd-singles: hsl(171, 65%, 25%), hsl(171, 65%, 66%);
+  --clr-cd-singles: hsl(45, 85%, 30%), hsl(55, 85%, 50%);
 
-  --clr-cds-main: hsl(159, 31%, 25%), hsl(159, 31%, 78%);
+  --clr-cds-main: hsl(180, 40%, 32%), hsl(180, 50%, 60%);
 
-  --clr-records: hsl(244, 87%, 42%), hsl(244, 86%, 67%);
+  --clr-records: hsl(300, 60%, 37%), hsl(300, 34%, 50%);
 
-  /* --clr-tapes: hsl(245, 21%, 25%), hsl(245, 21%, 55%); */
-
-  /* --dusty-olive: */
-  --clr-tapes: hsl(48, 16%, 25%), hsl(48, 16%, 45%);
-  /* coolors.co */
+  --clr-tapes: hsl(244, 87%, 42%), hsl(244, 100%, 75%);
 
   --heading-font: big-party;
 
@@ -163,9 +159,33 @@ header {
         width: fit-content;
       }
     }
-    .active-nav-btn {
-      background-color: rgb(from currentColor r g b / 0.5);
+
+    button[data-form="cd-comps-form"].active-nav-btn {
+      background-color: hsl(from light-dark(var(--clr-cd-comps)) h s l / 0.4);
+      outline-color: hsl(from light-dark(var(--clr-cd-comps)) h s l / 0.4);
+      color: hsl(0, 0%, 95%);
     }
+    button[data-form="cd-singles-form"].active-nav-btn {
+      background-color: hsl(from light-dark(var(--clr-cd-singles)) h s l / 0.4);
+      outline-color: hsl(from light-dark(var(--clr-cd-singles)) h s l / 0.4);
+      color: light-dark(white, hsl(55, 85%, 50%));
+    }
+    button[data-form="cd-main-form"].active-nav-btn {
+      background-color: hsl(from light-dark(var(--clr-cds-main)) h s l / 0.4);
+      outline-color: hsl(from light-dark(var(--clr-cds-main)) h s l / 0.4);
+      color: light-dark(white, hsl(180, 50%, 60%));
+    }
+    button[data-form="records-form"].active-nav-btn {
+      background-color: hsl(from light-dark(var(--clr-records)) h s l / 0.4);
+      outline-color: hsl(from light-dark(var(--clr-records)) h s l / 0.4);
+      color: light-dark(white, hsl(300, 34%, 60%));
+    }
+    button[data-form="tapes-form"].active-nav-btn {
+      background-color: hsl(from light-dark(var(--clr-tapes)) h s l / 0.4);
+      outline-color: hsl(from light-dark(var(--clr-tapes)) h s l / 0.4);
+      color: light-dark(white, hsl(244, 100%, 75%));
+    }
+
     button:focus-visible {
       outline: 1px solid light-dark(black, white);
       outline-offset: 7px;
@@ -195,6 +215,10 @@ main {
       justify-items: center;
       max-width: 100%;
       font-size: 1.5rem;
+
+      label {
+        color: currentColor;
+      }
 
       input,
       select,
