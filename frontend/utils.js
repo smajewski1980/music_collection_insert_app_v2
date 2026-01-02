@@ -72,7 +72,6 @@ export function trimTracks(arr) {
   return trimmed;
 }
 
-// ****still need to undo the increment if option changes before submit *******
 export function handleIncrementLocation(form) {
   // now we take this form and change the select options value and text content
   const selectedOption = Array.from(form.querySelectorAll("option")).filter(
@@ -96,6 +95,7 @@ export function handleIncrementLocation(form) {
   selectedOption.textContent = reassembledString;
 }
 export const incrementCheckbox = document.getElementById("increment-location");
+
 export function handleIncrementReset() {
   incrementCheckbox.checked = false;
 }
