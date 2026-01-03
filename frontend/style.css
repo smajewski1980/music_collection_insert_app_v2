@@ -120,10 +120,19 @@ header {
     border-radius: 10px;
     color: light-dark(var(--clr-font-main));
     display: flex;
+    gap: 0.5rem;
     justify-content: center;
     margin-block-end: 1rem;
     width: 250px;
     margin-inline: auto;
+
+    #light-mode-icon {
+      stroke: light-dark(#000, #bbb);
+    }
+
+    #dark-mode-icon {
+      fill: light-dark(#000, #bbb);
+    }
 
     #theme-slider {
       outline: 1px solid light-dark(var(--clr-font-main));
