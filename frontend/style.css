@@ -13,6 +13,8 @@
 
   --heading-font: big-party;
 
+  --body-bg: light-dark(rgb(187, 187, 187), black);
+
   color-scheme: light dark;
   scroll-behavior: smooth;
 }
@@ -38,7 +40,7 @@
 
 body {
   color: light-dark(var(--clr-font-main));
-  background: light-dark(rgb(187, 187, 187), black);
+  background: var(--body-bg);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   display: grid;
@@ -201,6 +203,122 @@ main {
   opacity: 0;
   transition: opacity 500ms;
 
+  #cd-comps-form.active-form {
+    label {
+      color: light-dark(var(--clr-cd-comps));
+    }
+    input,
+    select,
+    textarea,
+    button {
+      outline-color: light-dark(var(--clr-cd-comps));
+    }
+    button {
+      color: light-dark(var(--clr-cd-comps));
+    }
+
+    ~ .increment-wrapper {
+      label,
+      input {
+        color: light-dark(var(--clr-cd-comps));
+        accent-color: light-dark(var(--clr-cd-comps));
+      }
+    }
+  }
+
+  #cd-singles-form.active-form {
+    label {
+      color: light-dark(var(--clr-cd-singles));
+    }
+    input,
+    select,
+    textarea,
+    button {
+      outline-color: light-dark(var(--clr-cd-singles));
+    }
+    button {
+      color: light-dark(var(--clr-cd-singles));
+    }
+    ~ .increment-wrapper {
+      label,
+      input {
+        color: light-dark(var(--clr-cd-singles));
+        accent-color: light-dark(var(--clr-cd-singles));
+      }
+    }
+  }
+
+  #cd-main-form.active-form {
+    label {
+      color: light-dark(var(--clr-cds-main));
+    }
+    input,
+    select,
+    button {
+      outline-color: light-dark(var(--clr-cds-main));
+    }
+    button {
+      color: light-dark(var(--clr-cds-main));
+    }
+    ~ .increment-wrapper {
+      label,
+      input {
+        color: light-dark(var(--clr-cds-main));
+        accent-color: light-dark(var(--clr-cds-main));
+      }
+    }
+  }
+
+  #records-form.active-form {
+    label {
+      color: light-dark(var(--clr-records));
+    }
+    input,
+    select,
+    button {
+      outline-color: light-dark(var(--clr-records));
+    }
+    button {
+      color: light-dark(var(--clr-records));
+    }
+    ~ .increment-wrapper {
+      label,
+      input {
+        color: light-dark(var(--clr-records));
+        accent-color: light-dark(var(--clr-records));
+      }
+    }
+  }
+
+  #tapes-form.active-form {
+    label,
+    legend {
+      color: light-dark(var(--clr-tapes));
+    }
+    input,
+    select,
+    button {
+      outline-color: light-dark(var(--clr-tapes));
+    }
+
+    fieldset {
+      border-color: light-dark(var(--clr-tapes));
+      input {
+        accent-color: light-dark(var(--clr-tapes));
+      }
+    }
+    button {
+      color: light-dark(var(--clr-tapes));
+    }
+    ~ .increment-wrapper {
+      label,
+      input {
+        color: light-dark(var(--clr-tapes));
+        accent-color: light-dark(var(--clr-tapes));
+      }
+    }
+  }
+
   form {
     display: none;
     max-width: 100%;
@@ -215,10 +333,6 @@ main {
       justify-items: center;
       max-width: 100%;
       font-size: 1.5rem;
-
-      label {
-        color: currentColor;
-      }
 
       input,
       select,
@@ -239,10 +353,9 @@ main {
 
       select {
         min-width: 75%;
-        background: black;
 
         option {
-          background: transparent;
+          background-color: var(--body-bg);
         }
       }
 

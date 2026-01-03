@@ -268,6 +268,7 @@ function populateSelectList(data, select) {
     const option = document.createElement("option");
     option.value = loc;
     option.textContent = loc;
+    option.style.backgroundColor = "var(--body-bg)";
     select.appendChild(option);
   });
 }
