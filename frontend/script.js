@@ -69,7 +69,18 @@ async function handleCdCompsForm(e) {
   tracksFull.forEach((tr) => {
     // i use the pipe to split on
     const track = tr.split("|");
-    // a good track will have a length of 2
+    if (!track[0] || !track[1]) {
+      toasty("Check your track data. Must be <artist>|<title>.", "red");
+      toasty(
+        `${
+          track[0] === ""
+            ? "All tracks must have an artist"
+            : "All tracks must have a track name"
+        }`,
+        "red",
+      );
+      return;
+    }
     if (track.length === 2) {
       // if still undefined, create an empty array
       if (!tracksToSend) {
