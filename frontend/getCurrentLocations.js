@@ -255,7 +255,7 @@ function getMostCurrentLoc(array, format) {
 }
 
 // the HTML select elements
-const cdsMainSelect = document.getElementById("cds-main-location");
+const cdsMainSelect = document.getElementById("cds-main-datalist");
 const tapesSelect = document.getElementById("tapes-location");
 const recordsSelect = document.getElementById("records-location");
 const cdCompsSelect = document.getElementById("cd-comps-datalist");

@@ -278,6 +278,17 @@ async function handleCdsMainForm(e) {
   e.preventDefault();
   const formData = new FormData(cdsMainForm);
 
+  // get the option elements
+  const cdsMainOptionElems = Array.from(
+    document.querySelectorAll("#cds-main-datalist option"),
+  );
+
+  // map the options' text to a valid array
+  const validCdsMainLocs = cdsMainOptionElems.map((el) => el.value);
+
+  // the input element itself to access the current value
+  const cdsMainInput = document.getElementById("cds-main-location");
+
   const data = {
     artist: formData.get("artist"),
     title: formData.get("title"),
@@ -297,48 +308,50 @@ async function handleCdsMainForm(e) {
     body: JSON.stringify(trimDataFields(data)),
   };
 
-  try {
-    const res = await fetch("/cds-main", options);
+  if (isLocValValid(cdsMainInput, validCdsMainLocs)) {
+    try {
+      const res = await fetch("/cds-main", options);
 
-    if (res.status === 400) {
-      const errs = await res.json();
-      errs.forEach((er) => {
-        toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
-        console.log(`Value: ${er.value} ; Message: ${er.msg}`);
-      });
-      return;
-    }
-
-    if (res.status === 201) {
-      const resData = await res.json();
-      toasty(
-        `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
-        "green",
-      );
-
-      cdsMainForm.reset();
-      focusFirstField(cdsMainForm);
-      console.log("new item id: ", resData);
-
-      if (incrementLocationSwitch()) {
-        await getLocations();
-        handleIncrementReset();
+      if (res.status === 400) {
+        const errs = await res.json();
+        errs.forEach((er) => {
+          toasty(`Value: ${er.value} ; Message: ${er.msg}`, "red");
+          console.log(`Value: ${er.value} ; Message: ${er.msg}`);
+        });
+        return;
       }
 
-      if (!showSessionList) {
-        showSessionList = true;
-        sessionListWrapper.style.display = "block";
+      if (res.status === 201) {
+        const resData = await res.json();
+        toasty(
+          `${data.artist} - ${data.title} has been added to the database with id: ${resData}`,
+          "green",
+        );
+
+        cdsMainForm.reset();
+        focusFirstField(cdsMainForm);
+        console.log("new item id: ", resData);
+
+        if (incrementLocationSwitch()) {
+          await getLocations();
+          handleIncrementReset();
+        }
+
+        if (!showSessionList) {
+          showSessionList = true;
+          sessionListWrapper.style.display = "block";
+        }
+
+        window.scrollTo(0, 0);
+
+        // add item data to the session list
+        const sessionListStr = `id: ${resData} ${data.artist} - ${data.title} was added to cds main.`;
+        addToSessionList(sessionList, sessionListStr, "cds-main-color");
       }
-
-      window.scrollTo(0, 0);
-
-      // add item data to the session list
-      const sessionListStr = `id: ${resData} ${data.artist} - ${data.title} was added to cds main.`;
-      addToSessionList(sessionList, sessionListStr, "cds-main-color");
+    } catch (error) {
+      toasty(error, "red");
+      console.log(error);
     }
-  } catch (error) {
-    toasty(error, "red");
-    console.log(error);
   }
 }
 

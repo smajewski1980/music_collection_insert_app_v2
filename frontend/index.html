@@ -279,12 +279,16 @@
         </div>
         <div class="form-group">
           <label for="cds-main-location">location</label>
-          <select
+          <input
+            list="cds-main-datalist"
             name="location"
             id="cds-main-location"
+            autocomplete="off"
           >
+          <datalist id="cds-main-datalist">
             <option value=""></option>
-          </select>
+          </datalist>
+          </input>
         </div>
         <button>submit</button>
       </form>
