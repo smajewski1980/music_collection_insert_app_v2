@@ -15,6 +15,7 @@ import {
   removeActiveClass,
   showForm,
   initialShowForm,
+  isLocValValid,
 } from "./utils.js";
 import { getLocations } from "./getCurrentLocations.js";
 const cdCompsForm = document.getElementById("cd-comps-form");
@@ -58,6 +59,15 @@ function handleNavBtnClick(e) {
 async function handleCdCompsForm(e) {
   e.preventDefault();
   const formData = new FormData(cdCompsForm);
+
+  // get the option elems
+  const cdCompOptionElems = Array.from(
+    document.querySelectorAll("#cd-comps-datalist option"),
+  );
+  // map the options' text to a valid array
+  const validCdCompsLocs = cdCompOptionElems.map((el) => el.value);
+  // the input element itself to access the current value
+  const cdCompsInput = document.getElementById("cd-comps-location");
 
   // ----- convert track data from a long string to nested arrays
   // the whole string
@@ -121,7 +131,10 @@ async function handleCdCompsForm(e) {
     return;
   }
 
-  if (noEmptyFields(data, true)) {
+  if (
+    noEmptyFields(data, true) &&
+    isLocValValid(cdCompsInput, validCdCompsLocs)
+  ) {
     try {
       const res = await fetch("/cd-comps", options);
 

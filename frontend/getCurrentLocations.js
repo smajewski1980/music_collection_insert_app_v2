@@ -258,7 +258,7 @@ function getMostCurrentLoc(array, format) {
 const cdsMainSelect = document.getElementById("cds-main-location");
 const tapesSelect = document.getElementById("tapes-location");
 const recordsSelect = document.getElementById("records-location");
-const cdCompsSelect = document.getElementById("cd-comps-location");
+const cdCompsSelect = document.getElementById("cd-comps-datalist");
 const cdSinglesSelect = document.getElementById("cd-singles-case-type");
 
 // create the option elements and put in the DOM

@@ -167,3 +167,12 @@ export function initialShowForm(mainEl, incrementWrapper) {
   incrementWrapper.style.display = "block";
   mainEl.style.opacity = 1;
 }
+
+export function isLocValValid(inputEl, validArr) {
+  if (validArr.includes(inputEl.value)) {
+    return true;
+  } else {
+    toasty("Location field does not contain a valid value.", "red");
+    return false;
+  }
+}

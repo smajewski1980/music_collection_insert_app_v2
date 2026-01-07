@@ -178,12 +178,16 @@
         </div>
         <div class="form-group">
           <label for="cd-comps-location">location</label>
-          <select
+          <input
+            list="cd-comps-datalist"
             name="location"
             id="cd-comps-location"
+            autocomplete="off"
           >
+          <datalist id="cd-comps-datalist">
             <option value=""></option>
-          </select>
+          </datalist>
+          </input>
         </div>
         <div class="form-group">
           <label for="cd-comps-tracks">tracks</label>
