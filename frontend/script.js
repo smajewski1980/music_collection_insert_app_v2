@@ -187,6 +187,14 @@ async function handleCdSinglesForm(e) {
   const formData = new FormData(cdSinglesForm);
   // break down the tracks string to an array, each track gets trimmed later
   const trackList = formData.get("tracks").trim().split("\n");
+  // get the option elems
+  const cdSinglesOptionElems = Array.from(
+    document.querySelectorAll("#cd-singles-datalist option"),
+  );
+  // map the options' text to a valid array
+  const validCdSingleLocs = cdSinglesOptionElems.map((el) => el.value);
+  // the input element itself to access the current value
+  const cdSinglesInput = document.getElementById("cd-singles-case-type");
 
   const data = {
     artist: formData.get("artist"),
@@ -220,7 +228,10 @@ async function handleCdSinglesForm(e) {
     body: JSON.stringify(trimDataFields(data)),
   };
 
-  if (noEmptyFields(data, true)) {
+  if (
+    noEmptyFields(data, true) &&
+    isLocValValid(cdSinglesInput, validCdSingleLocs)
+  ) {
     try {
       const res = await fetch("/cd-singles", options);
 

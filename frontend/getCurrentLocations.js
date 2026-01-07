@@ -259,7 +259,7 @@ const cdsMainSelect = document.getElementById("cds-main-location");
 const tapesSelect = document.getElementById("tapes-location");
 const recordsSelect = document.getElementById("records-location");
 const cdCompsSelect = document.getElementById("cd-comps-datalist");
-const cdSinglesSelect = document.getElementById("cd-singles-case-type");
+const cdSinglesSelect = document.getElementById("cd-singles-datalist");
 
 // create the option elements and put in the DOM
 function populateSelectList(data, select) {

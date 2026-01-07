@@ -232,13 +232,17 @@
           />
         </div>
         <div class="form-group">
-          <label for="cd-singles-case-type">case type</label>
-          <select
+          <label for="cd-singles-case-type">case type/location</label>
+          <input
+            list="cd-singles-datalist"
             name="caseType"
             id="cd-singles-case-type"
+            autocomplete="off"
           >
+          <datalist id="cd-singles-datalist">
             <option value=""></option>
-          </select>
+          </datalist>
+          </input>
         </div>
         <div class="form-group">
           <label for="cd-singles-tracks">tracks</label>
