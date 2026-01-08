@@ -359,6 +359,17 @@ async function handleRecordsForm(e) {
   e.preventDefault();
   const formData = new FormData(recordsForm);
 
+  // get the option elements
+  const recordsOptionElems = Array.from(
+    document.querySelectorAll("#records-datalist option"),
+  );
+
+  // map the options' text to a valid array
+  const validRecordsLocs = recordsOptionElems.map((el) => el.value);
+
+  // the input element itself to access the current value
+  const recordsInput = document.getElementById("records-location");
+
   const data = {
     artist: formData.get("artist"),
     title: formData.get("title"),
@@ -389,7 +400,10 @@ async function handleRecordsForm(e) {
     body: JSON.stringify(trimDataFields(data)),
   };
 
-  if (noEmptyFields(data, false)) {
+  if (
+    noEmptyFields(data, false) &&
+    isLocValValid(recordsInput, validRecordsLocs)
+  ) {
     try {
       const res = await fetch("/records", options);
 

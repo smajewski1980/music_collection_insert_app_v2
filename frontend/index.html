@@ -316,12 +316,16 @@
         </div>
         <div class="form-group">
           <label for="records-location">location</label>
-          <select
+          <input
+            list="records-datalist"
             name="location"
             id="records-location"
+            autocomplete="off"
           >
+          <datalist id="records-datalist">
             <option value=""></option>
-          </select>
+          </datalist>
+          </input>
         </div>
         <div class="form-group">
           <label for="records-year">year</label>
