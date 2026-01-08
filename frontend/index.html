@@ -481,12 +481,16 @@
         </div>
         <div class="form-group">
           <label for="tapes-location">location</label>
-          <select
+          <input
+            list="tapes-datalist"
             name="location"
             id="tapes-location"
+            autocomplete="off"
           >
+          <datalist id="tapes-datalist">
             <option value=""></option>
-          </select>
+          </datalist>
+          </input>
         </div>
         <div class="form-group">
           <label for="tapes-year">year</label>

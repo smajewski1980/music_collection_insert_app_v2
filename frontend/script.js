@@ -454,6 +454,17 @@ async function handleTapesForm(e) {
   e.preventDefault();
   const formData = new FormData(tapesForm);
 
+  // get the option elements
+  const tapesOptionElems = Array.from(
+    document.querySelectorAll("#tapes-datalist option"),
+  );
+
+  // map the options' text to a valid array
+  const validTapesLocs = tapesOptionElems.map((el) => el.value);
+
+  // the input element itself to access the current value
+  const tapesInput = document.getElementById("tapes-location");
+
   const data = {
     artist: formData.get("artist"),
     title: formData.get("title"),
@@ -482,7 +493,7 @@ async function handleTapesForm(e) {
     body: JSON.stringify(trimDataFields(data)),
   };
 
-  if (noEmptyFields(data, false)) {
+  if (noEmptyFields(data, false) && isLocValValid(tapesInput, validTapesLocs)) {
     try {
       const res = await fetch("/tapes", options);
 
